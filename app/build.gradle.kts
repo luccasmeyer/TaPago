@@ -1,5 +1,7 @@
+val room_version = "2.8.4"
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -8,6 +10,10 @@ android {
         version = release(36) {
             minorApiLevel = 1
         }
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     defaultConfig {
@@ -44,4 +50,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    implementation(platform("io.insert-koin:koin-bom:4.1.1"))
+    implementation("io.insert-koin:koin-android")
+    implementation("io.insert-koin:koin-androidx-compose")
+    implementation("androidx.room:room-runtime:${room_version}")
+    ksp("androidx.room:room-compiler:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
 }
