@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home_24dp"
+        android:title="Início" />
+
+    <item
+        android:id="@+id/nav_treino"
+        android:icon="@drawable/exercise_24dp"
+        android:title="Treinos" />
+
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/person_24dp"
+        android:title="Perfil" />
+</menu>
