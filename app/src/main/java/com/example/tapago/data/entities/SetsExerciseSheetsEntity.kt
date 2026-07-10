@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(
             ExercisesSheetEntity::class,
-            ["exervieSheetId"],
-            ["exervieSheetId"],
+            ["exerciseSheetId"],
+            ["exerciseSheetId"],
             ForeignKey.CASCADE
         )
     ]
@@ -21,5 +21,5 @@ data class SetsExerciseSheetsEntity(
     @ColumnInfo("numSet") val numPed: Int,
     @ColumnInfo("numRep") val numRep: Int,
     @ColumnInfo("weight") val weight: Double,
-    @ColumnInfo("exervieSheetId") val exervieSheetId: Int
+    @ColumnInfo("exerciseSheetId") val exervieSheetId: Int
 )
