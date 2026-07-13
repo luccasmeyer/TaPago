@@ -8,18 +8,22 @@
         android:id="@+id/text_menu_app_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Treino do Dia"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Treino do Dia"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_sheet_workout_today_cv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/text_menu_app_tv"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        app:layout_constraintStart_toStartOf="@+id/text_menu_app_tv"
+        app:layout_constraintTop_toBottomOf="@+id/text_menu_app_tv">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_info_workout_today_cl"
@@ -31,18 +35,18 @@
                 android:id="@+id/name_sheet_today_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="Superiores"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="Superiores"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/start_sheet_today_mb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Iniciar"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Iniciar"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -50,8 +54,9 @@
 
     <include
         android:id="@+id/include_menu_app"
+        layout="@layout/layout_bottom_menu_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/layout_bottom_menu_view"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

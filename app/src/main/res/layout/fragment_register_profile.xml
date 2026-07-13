@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_bar_mt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:navigationIcon="@drawable/arrow_back_ios_24dp"
+        app:title="Cadastro de perfil"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_profile_tl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar_mt"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="16dp"
+        android:hint="Seu nome">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_profile_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:singleLine="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/weight_profile_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/name_profile_tl"
+        app:layout_constraintStart_toStartOf="@+id/name_profile_tl"
+        android:layout_marginTop="24dp"
+        android:text="Seu peso"/>
+
+    <LinearLayout
+        android:id="@+id/weight_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/weight_profile_tv"
+        app:layout_constraintStart_toStartOf="@+id/name_profile_tl"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/weight_less_bt"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="?attr/materialIconButtonStyle"
+            app:icon="@drawable/add_24dp"/>
+
+        <EditText
+            android:id="@+id/weight_et"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:gravity="center"
+            android:padding="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/weight_plus_bt"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="?attr/materialIconButtonStyle"
+            app:icon="@drawable/remove_24dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/height_profile_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/weight_profile"
+        app:layout_constraintStart_toStartOf="@+id/name_profile_tl"
+        android:layout_marginTop="24dp"
+        android:text="Sua altura"/>
+
+    <LinearLayout
+        android:id="@+id/height_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/height_profile_tv"
+        app:layout_constraintStart_toStartOf="@+id/name_profile_tl"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/height_less_bt"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="?attr/materialIconButtonStyle"
+            app:icon="@drawable/add_24dp"/>
+
+        <EditText
+            android:id="@+id/height_et"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:gravity="center"
+            android:padding="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/height_plus_bt"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="?attr/materialIconButtonStyle"
+            app:icon="@drawable/remove_24dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
