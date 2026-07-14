@@ -52,11 +52,4 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <include
-        android:id="@+id/include_menu_app"
-        layout="@layout/layout_bottom_menu_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
