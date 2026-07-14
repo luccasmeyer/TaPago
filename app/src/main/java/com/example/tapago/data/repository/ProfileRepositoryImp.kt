@@ -10,14 +10,24 @@ import com.example.tapago.domain.repository.ITaPagoRepository
 import com.example.tapago.domain.wrapper.IResourceRoom
 
 class ProfileRepositoryImp(
-    private val dao: ProfileDao
+    private val dao: ProfileDao,
+    private var profileCache: Profile? = null,
+    private var getDatabaseYet: Boolean = false
 ): ITaPagoRepository<ProfileEntity> {
 
     suspend fun getProfile(): IResourceRoom<Profile> {
-        return safeDbCall {
-            dao.getProfile()
-        }.map { entity ->
-            entity.toDomain()
+
+        if(getDatabaseYet){
+            return IResourceRoom.Success(profileCache!!)
+        }
+
+        return safeDbCall { dao.getProfile() }.map { entity ->
+            val profile = entity.toDomain()
+
+            profileCache = profile
+            getDatabaseYet = true
+
+            profile
         }
     }
 
