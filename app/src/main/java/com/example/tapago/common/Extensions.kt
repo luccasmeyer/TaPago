@@ -42,3 +42,13 @@ fun Fragment.navigateSafe(
         onNavigate()
     }
 }
+
+fun Fragment.popBackStackSafe(@IdRes idRes: Int? = null, inclusive: Boolean = false) {
+    if (lifecycle.currentState >= Lifecycle.State.STARTED) {
+        idRes?.let {
+            findNavController().popBackStack(it, inclusive)
+        } ?: run {
+            findNavController().popBackStack()
+        }
+    }
+}
