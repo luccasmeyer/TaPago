@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.tapago.R
+import com.example.tapago.common.convertForDouble
 import com.example.tapago.common.navigateSafe
 import com.example.tapago.common.popBackStackSafe
 import com.example.tapago.data.entities.ProfileEntity
@@ -33,6 +34,50 @@ class RegisterProfileFragment: Fragment() {
         binding.topBarMt.setOnClickListener { popBackStackSafe() }
 
         registerProfile()
+
+        binding.weightPlusBt.setOnClickListener {
+            val currentWeight = convertForDouble(binding.weightEt.text.toString())
+            val newWeight = currentWeight + 0.5
+
+            if (newWeight <= 0.0) {
+                return@setOnClickListener
+            }
+
+            binding.weightEt.setText(newWeight.toString())
+        }
+
+        binding.weightLessBt.setOnClickListener {
+            val currentWeight = convertForDouble(binding.weightEt.text.toString())
+            val newWeight = currentWeight - 0.5
+
+            if (newWeight <= 0.0) {
+                return@setOnClickListener
+            }
+
+            binding.weightEt.setText(newWeight.toString())
+        }
+
+        binding.heightPlusBt.setOnClickListener {
+            val currentHeighr = convertForDouble(binding.heightEt.text.toString())
+            val newHeighr = currentHeighr + 0.5
+
+            if (newHeighr <= 0.0) {
+                return@setOnClickListener
+            }
+
+            binding.heightEt.setText(newHeighr.toString())
+        }
+
+        binding.heightLessBt.setOnClickListener {
+            val currentHeighr = convertForDouble(binding.heightEt.text.toString())
+            val newHeighr = currentHeighr - 0.5
+
+            if (newHeighr <= 0.0) {
+                return@setOnClickListener
+            }
+
+            binding.heightEt.setText(newHeighr.toString())
+        }
     }
 
     private fun registerProfile() {
