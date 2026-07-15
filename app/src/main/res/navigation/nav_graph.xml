@@ -12,11 +12,25 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.tapago.presentation.profile.ProfileFragment"
-        android:label="ProfileFragment"/>
+        android:label="ProfileFragment">
+
+        <action
+            android:id="@+id/actionRegisterProfile"
+            app:destination="@+id/registerProfile"/>
+    </fragment>
 
     <fragment
         android:id="@+id/workoutFragment"
         android:name="com.example.tapago.presentation.workout.WorkoutFragment"
         android:label="WorkoutFragment"/>
 
+    <fragment
+        android:id="@+id/registerProfile"
+        android:name="com.example.tapago.presentation.profile.RegisterProfileFragment"
+        android:label="RegisterProfileFragment">
+
+        <action
+            android:id="@+id/actionRegisterProfileToProfile"
+            app:destination="@+id/profileFragment"/>
+    </fragment>
 </navigation>

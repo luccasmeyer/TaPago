@@ -52,7 +52,7 @@
         android:layout_marginTop="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/weight_less_bt"
+            android:id="@+id/weight_plus_bt"
             android:layout_width="48dp"
             android:layout_height="48dp"
             style="?attr/materialIconButtonStyle"
@@ -64,10 +64,11 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:gravity="center"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:text="0"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/weight_plus_bt"
+            android:id="@+id/weight_less_bt"
             android:layout_width="48dp"
             android:layout_height="48dp"
             style="?attr/materialIconButtonStyle"
@@ -94,7 +95,7 @@
         android:layout_marginTop="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/height_less_bt"
+            android:id="@+id/height_plus_bt"
             android:layout_width="48dp"
             android:layout_height="48dp"
             style="?attr/materialIconButtonStyle"
@@ -106,14 +107,24 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:gravity="center"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:text="0"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/height_plus_bt"
+            android:id="@+id/height_less_bt"
             android:layout_width="48dp"
             android:layout_height="48dp"
             style="?attr/materialIconButtonStyle"
             app:icon="@drawable/remove_24dp"/>
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/register_profile_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/name_profile_tl"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="24dp"
+        android:text="Registrar-se"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

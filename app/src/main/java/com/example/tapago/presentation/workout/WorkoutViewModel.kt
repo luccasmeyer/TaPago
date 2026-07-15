@@ -1,4 +1,6 @@
 package com.example.tapago.presentation.workout
 
-class WorkoutViewModel {
+import androidx.lifecycle.ViewModel
+
+class WorkoutViewModel: ViewModel() {
 }
