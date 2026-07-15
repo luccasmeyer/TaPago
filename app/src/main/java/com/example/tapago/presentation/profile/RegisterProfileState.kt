@@ -2,5 +2,5 @@ package com.example.tapago.presentation.profile
 
 data class RegisterProfileState(
 
-    val isLoading: Boolean? = null
+    val isLoading: Boolean = true
 )
