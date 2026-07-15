@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.tapago.R
+import com.example.tapago.common.navigateSafe
 import com.example.tapago.common.popBackStackSafe
 import com.example.tapago.data.entities.ProfileEntity
 import com.example.tapago.databinding.FragmentRegisterProfileBinding
@@ -33,38 +35,54 @@ class RegisterProfileFragment: Fragment() {
         registerProfile()
     }
 
-    private fun registerProfile(){
+    private fun registerProfile() {
         binding.registerProfileBt.setOnClickListener {
+            val nameText = binding.nameProfileEt.text.toString()
+            val weightText = binding.weightEt.text.toString()
+            val heightText = binding.heightEt.text.toString()
 
-            val profileEntity = ProfileEntity(
-                nameProfile = binding.nameProfileEt.text.toString(),
-                weightProfile = binding.weightEt.text.toString().toDouble(),
-                heightProfile = binding.heightEt.text.toString().toDouble()
-            )
+            val weight = weightText.toDoubleOrNull() ?: 0.0
+            val height = heightText.toDoubleOrNull() ?: 0.0
 
-            if(profileEntity.nameProfile.isBlank() && profileEntity.weightProfile.toInt() == 0 && profileEntity.heightProfile.toInt() == 0){
-                MaterialAlertDialogBuilder(requireContext()).setTitle("Aviso")
-                    .setMessage("Você precisa preencher as informações")
-                    .setPositiveButton("OK", null).show()
-            } else {
-                when{
-                    profileEntity.nameProfile.isBlank() -> {
-                        MaterialAlertDialogBuilder(requireContext()).setTitle("Aviso")
-                            .setMessage("Você precisa preencher seu nome")
-                            .setPositiveButton("OK", null).show()
-                    }
-                    profileEntity.weightProfile.toInt() == 0 -> {
-                        MaterialAlertDialogBuilder(requireContext()).setTitle("Aviso")
-                            .setMessage("Você precisa preencher seu peso")
-                            .setPositiveButton("OK", null).show()
-                    }
-                    profileEntity.heightProfile.toInt() == 0 -> {
-                        MaterialAlertDialogBuilder(requireContext()).setTitle("Aviso")
-                            .setMessage("Você precisa preencher sua altura")
-                            .setPositiveButton("OK", null).show()
-                    }
+            when {
+                nameText.isBlank() && weight == 0.0 && height == 0.0 -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Aviso")
+                        .setMessage("Você precisa preencher as informações")
+                        .setPositiveButton("OK", null).show()
+                    return@setOnClickListener
+                }
+                nameText.isBlank() -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Aviso")
+                        .setMessage("Você precisa preencher seu nome")
+                        .setPositiveButton("OK", null).show()
+                    return@setOnClickListener
+                }
+                weight == 0.0 -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Aviso")
+                        .setMessage("Você precisa preencher seu peso")
+                        .setPositiveButton("OK", null).show()
+                    return@setOnClickListener
+                }
+                height == 0.0 -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Aviso")
+                        .setMessage("Você precisa preencher sua altura")
+                        .setPositiveButton("OK", null).show()
+                    return@setOnClickListener
                 }
             }
+
+            val profileEntity = ProfileEntity(
+                nameProfile = nameText,
+                weightProfile = weight,
+                heightProfile = height
+            )
+
+            viewModel.postProfile(profileEntity)
+            navigateSafe(R.id.actionRegisterProfileToProfile)
         }
     }
 

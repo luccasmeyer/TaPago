@@ -28,5 +28,9 @@
         android:id="@+id/registerProfile"
         android:name="com.example.tapago.presentation.profile.RegisterProfileFragment"
         android:label="RegisterProfileFragment">
+
+        <action
+            android:id="@+id/actionRegisterProfileToProfile"
+            app:destination="@+id/profileFragment"/>
     </fragment>
 </navigation>
