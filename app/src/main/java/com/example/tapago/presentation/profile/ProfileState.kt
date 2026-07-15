@@ -4,7 +4,7 @@ import com.example.tapago.domain.model.Profile
 
 data class ProfileState(
 
-    val isLoading: Boolean? = null,
+    val isLoading: Boolean = true,
     val message: String? = null,
     val profile: Profile? = null
 )

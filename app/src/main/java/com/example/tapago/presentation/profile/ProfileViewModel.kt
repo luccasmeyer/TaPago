@@ -1,5 +1,6 @@
 package com.example.tapago.presentation.profile
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tapago.data.entities.ProfileEntity
@@ -14,30 +15,38 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val repo: ProfileRepositoryImp
-): ViewModel() {
+) : ViewModel() {
     private var _uiState = MutableStateFlow(ProfileState())
     val uiState: StateFlow<ProfileState> = _uiState.asStateFlow()
 
-    fun getProfile(){
+    fun getProfile() {
         viewModelScope.launch {
-            _uiState.update { it.copy(
-                isLoading = true
-            ) }
-
-            when(
+            _uiState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+            when (
                 val result = repo.getProfile()
-            ){
+            ) {
                 is IResourceRoom.Success -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        profile = result.data
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            profile = result.data
+                        )
+                    }
+                    return@launch
                 }
+
                 is IResourceRoom.Error -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        message = result.message
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            message = result.message
+                        )
+                    }
+                    return@launch
                 }
             }
         }

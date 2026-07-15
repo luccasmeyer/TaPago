@@ -1,12 +1,21 @@
 package com.example.tapago.common
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Window
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.example.tapago.R
+import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 fun Fragment.navigateSafe(
     @IdRes idRes: Int,
@@ -51,4 +60,44 @@ fun Fragment.popBackStackSafe(@IdRes idRes: Int? = null, inclusive: Boolean = fa
             findNavController().popBackStack()
         }
     }
+}
+
+fun <T> Fragment.observe(
+    flow: Flow<T>,
+    estado: Lifecycle.State = Lifecycle.State.STARTED,
+    acao: suspend CoroutineScope.(T) -> Unit
+) {
+    lifecycleScope.launch {
+        viewLifecycleOwner.repeatOnLifecycle(estado) {
+            flow.collect { valor ->
+                this.acao(valor)
+            }
+        }
+    }
+}
+
+fun Fragment.showRegisterDialog(
+    onRegisterClick: () -> Unit,
+    onSkipClick: () -> Unit
+) {
+    val dialog = Dialog(requireContext())
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+    dialog.setContentView(R.layout.dialog_register_profile)
+//    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+    val btnYes = dialog.findViewById<MaterialButton>(R.id.yes_register_dialog)
+    val btnNo = dialog.findViewById<MaterialButton>(R.id.not_register_dialog)
+
+    btnYes.setOnClickListener {
+        onRegisterClick()
+        dialog.dismiss()
+    }
+
+    btnNo.setOnClickListener {
+        onSkipClick()
+        dialog.dismiss()
+    }
+
+    dialog.show()
 }
