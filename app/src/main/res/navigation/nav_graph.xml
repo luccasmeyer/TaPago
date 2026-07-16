@@ -22,7 +22,12 @@
     <fragment
         android:id="@+id/workoutFragment"
         android:name="com.example.tapago.presentation.workout.WorkoutFragment"
-        android:label="WorkoutFragment"/>
+        android:label="WorkoutFragment">
+
+        <action
+            android:id="@+id/actionWorkoutToRegisterWorkout"
+            app:destination="@+id/registerSheetFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/registerProfile"
@@ -32,5 +37,11 @@
         <action
             android:id="@+id/actionRegisterProfileToProfile"
             app:destination="@+id/profileFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerSheetFragment"
+        android:name="com.example.tapago.presentation.workout.RegisterSheetFragment"
+        android:label="RegisterSheetFragment">
     </fragment>
 </navigation>

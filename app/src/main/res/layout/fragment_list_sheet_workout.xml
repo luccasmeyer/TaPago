@@ -9,13 +9,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_sheet_workout_rv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/layout_sheet_workout_item"
-        tools:itemCount="4"/>
+        tools:itemCount="4"
+        android:fitsSystemWindows="true"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_sheet_fab"
@@ -24,7 +24,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:icon="@drawable/add_24dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
