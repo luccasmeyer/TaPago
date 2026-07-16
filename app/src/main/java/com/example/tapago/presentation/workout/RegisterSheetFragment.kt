@@ -5,34 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.tapago.R
-import com.example.tapago.common.navigateSafe
-import com.example.tapago.databinding.FragmentListSheetWorkoutBinding
+import com.example.tapago.databinding.FragmentRegisterSheetBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class WorkoutFragment: Fragment() {
-
-    private var _binding: FragmentListSheetWorkoutBinding? = null
+class RegisterSheetFragment: Fragment() {
+    private var _binding: FragmentRegisterSheetBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: RegisterSheetViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentListSheetWorkoutBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navigateNewSheet()
-    }
 
-    private fun navigateNewSheet(){
-        binding.addSheetFab.setOnClickListener {
-            navigateSafe(R.id.actionWorkoutToRegisterWorkout)
-        }
     }
 
     override fun onDestroyView() {
