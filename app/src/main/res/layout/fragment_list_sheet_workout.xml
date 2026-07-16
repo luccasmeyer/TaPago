@@ -14,7 +14,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/layout_sheet_workout_item"
-        tools:itemCount="4"/>
+        tools:itemCount="4"
+        android:fitsSystemWindows="true"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_sheet_fab"

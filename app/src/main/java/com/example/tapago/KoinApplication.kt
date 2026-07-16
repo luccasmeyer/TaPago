@@ -1,7 +1,7 @@
 package com.example.tapago
 
-import com.example.tapago.data.daos.ProfileDao
 import com.example.tapago.data.repository.ProfileRepositoryImp
+import com.example.tapago.data.repository.SheetRepositoryImp
 import com.example.tapago.presentation.menu.MenuViewModel
 import com.example.tapago.presentation.profile.ProfileViewModel
 import com.example.tapago.presentation.profile.RegisterProfileViewModel
@@ -14,12 +14,13 @@ import org.koin.dsl.module
 val appModule = module {
     single { AppDatabase.getDatabase(androidContext()) }
     single { ProfileRepositoryImp(get()) }
+    single { SheetRepositoryImp(get()) }
     single { get<AppDatabase>().ProfileDao() }
     single { get<AppDatabase>().SheetDao() }
 
     viewModel { MenuViewModel() }
     viewModel { ProfileViewModel(get()) }
     viewModel { RegisterProfileViewModel(get()) }
-    viewModel { WorkoutViewModel() }
+    viewModel { WorkoutViewModel(get()) }
     viewModel { RegisterSheetViewModel(get()) }
 }
