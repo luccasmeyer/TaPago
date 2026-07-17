@@ -8,6 +8,16 @@
         android:id="@+id/registerSheetFragment"
         android:name="com.example.tapago.presentation.workout.RegisterSheetFragment"
         android:label="RegisterSheetFragment">
+
+        <action
+            android:id="@+id/actionRegisterSheetToRegisterExercise"
+            app:destination="@+id/registerExerceise"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerExerceise"
+        android:name="com.example.tapago.presentation.workout.exercise.RegisterExerciseFragment"
+        android:label="RegisterExerciseFragment">
     </fragment>
 
 </navigation>
