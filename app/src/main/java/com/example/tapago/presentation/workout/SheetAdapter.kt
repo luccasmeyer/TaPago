@@ -31,6 +31,8 @@ class SheetAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sheet: Sheet) {
+            binding.nameSheetTv.text = sheet.nameSheet
+
             binding.root.setOnClickListener {
                 onItemClick?.invoke(sheet)
             }
