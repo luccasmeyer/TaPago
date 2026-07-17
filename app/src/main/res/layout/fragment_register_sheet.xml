@@ -51,16 +51,25 @@
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/register_exercise_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/search_exercise_tl"
+        app:layout_constraintEnd_toEndOf="@+id/search_exercise_tl"
+        android:layout_marginTop="8dp"
+        android:text="Criar exercisio"/>
+
     <TextView
         android:id="@+id/title_added_exercises_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+
         android:text="Exercícios Adicionados"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_exercise_tl"/>
+        app:layout_constraintTop_toBottomOf="@+id/register_exercise_bt"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercises_rv"

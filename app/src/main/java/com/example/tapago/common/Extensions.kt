@@ -13,6 +13,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.tapago.R
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -100,4 +101,19 @@ fun Fragment.showRegisterDialog(
     }
 
     dialog.show()
+}
+
+fun Fragment.snackbar(
+    message: String, click: Pair<String, () -> Unit>? = null, short: Boolean = true
+): Snackbar? {
+    if (view == null || message.isBlank()) return null
+    val snackbar =
+        Snackbar.make(view!!, message, if (short) Snackbar.LENGTH_SHORT else Snackbar.LENGTH_LONG)
+    click?.let {
+        snackbar.setAction(click.first) {
+            click.second()
+        }
+    }
+    snackbar.show()
+    return snackbar
 }

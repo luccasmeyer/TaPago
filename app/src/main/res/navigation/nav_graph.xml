@@ -20,16 +20,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/workoutFragment"
-        android:name="com.example.tapago.presentation.workout.WorkoutFragment"
-        android:label="WorkoutFragment">
-
-        <action
-            android:id="@+id/actionWorkoutToRegisterWorkout"
-            app:destination="@+id/registerSheetFragment"/>
-    </fragment>
-
-    <fragment
         android:id="@+id/registerProfile"
         android:name="com.example.tapago.presentation.profile.RegisterProfileFragment"
         android:label="RegisterProfileFragment">
@@ -40,8 +30,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/registerSheetFragment"
-        android:name="com.example.tapago.presentation.workout.RegisterSheetFragment"
-        android:label="RegisterSheetFragment">
+        android:id="@+id/workoutFragment"
+        android:name="com.example.tapago.presentation.workout.WorkoutFragment"
+        android:label="WorkoutFragment">
+
+        <action
+            android:id="@+id/actionWorkoutToRegisterWorkout"
+            app:destination="@+id/register_sheet_graph"/>
     </fragment>
+
+    <include app:graph="@navigation/register_sheet_graph"/>
 </navigation>

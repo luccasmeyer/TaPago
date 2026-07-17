@@ -1,6 +1,7 @@
 package com.example.tapago
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
@@ -17,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navigateOption()
-
     }
 
     private fun navigateOption(){
@@ -26,7 +26,21 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHost.navController
 
-        binding.includeBottonMenu.bottomNavigationBnv.setupWithNavController(navController)
+        val bottomNav = binding.includeBottonMenu.bottomNavigationBnv
+        bottomNav.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.workoutFragment,
+                R.id.menuFragment,
+                R.id.profileFragment -> {
+                    bottomNav.visibility = View.VISIBLE
+                }
+                else -> {
+                    bottomNav.visibility = View.GONE
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
