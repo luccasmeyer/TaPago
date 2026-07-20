@@ -17,6 +17,9 @@ import com.example.tapago.common.navigateSafe
 import com.example.tapago.common.popBackStackSafe
 import com.example.tapago.common.snackbar
 import com.example.tapago.databinding.FragmentRegisterSheetBinding
+import com.example.tapago.domain.model.workout.Workout
+import com.example.tapago.domain.model.workout.WorkoutExercise
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,6 +45,7 @@ class RegisterSheetFragment : Fragment() {
         setupRecyclerView()
         setupSearchDropdown()
         observeViewModel()
+        createSheet()
 
         binding.topBarMt.setOnClickListener { popBackStackSafe() }
         binding.registerExerciseBt.setOnClickListener {
@@ -72,10 +76,26 @@ class RegisterSheetFragment : Fragment() {
         }
     }
 
-    private fun createSheet(){
+    private fun createSheet() {
         binding.saveSheetBtn.setOnClickListener {
-            val listExercise = viewModel.uiState.value.addedExercises
 
+            if (binding.nameSheetEt.text!!.isEmpty()) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Aviso")
+                    .setMessage("Preencha o nome da ficha")
+                    .setPositiveButton("OK", null).show()
+                return@setOnClickListener
+            }
+
+            val currentExercises = viewModel.uiState.value.addedExercises
+
+            val workout = Workout(
+                nameSheet = binding.nameSheetEt.text.toString(),
+                qtdExercise = currentExercises.size,
+                listExercise = currentExercises
+            )
+
+            viewModel.createSheet(workout)
         }
     }
 

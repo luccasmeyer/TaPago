@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
 import com.example.tapago.databinding.LayoutExerceiseAddedItemBinding
 import com.example.tapago.domain.model.Exercise
+import com.example.tapago.domain.model.workout.WorkoutExercise
 
-class AddedExerciseAdapter: ListAdapter<Exercise, AddedExerciseAdapter.ExerciseViewHolder>(DiffCallback()) {
+class AddedExerciseAdapter: ListAdapter<WorkoutExercise, AddedExerciseAdapter.ExerciseViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
         val binding = LayoutExerceiseAddedItemBinding.inflate(
@@ -23,17 +24,16 @@ class AddedExerciseAdapter: ListAdapter<Exercise, AddedExerciseAdapter.ExerciseV
 
     inner class ExerciseViewHolder(private val binding: LayoutExerceiseAddedItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(exercise: Exercise) {
+        fun bind(exercise: WorkoutExercise) {
             binding.exerciseNameTv.text = exercise.nameExercise
         }
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Exercise>() {
-        override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise) =
-            oldItem.idExerceise == newItem.idExerceise
+    class DiffCallback : DiffUtil.ItemCallback<WorkoutExercise>() {
+        override fun areItemsTheSame(oldItem: WorkoutExercise, newItem: WorkoutExercise) =
+            oldItem.nameExercise == newItem.nameExercise
 
-        override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise) =
+        override fun areContentsTheSame(oldItem: WorkoutExercise, newItem: WorkoutExercise) =
             oldItem == newItem
     }
 }
