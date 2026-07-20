@@ -3,7 +3,7 @@ package com.example.tapago.presentation.workout
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tapago.data.repository.ExerciseRepositoryImp
-import com.example.tapago.data.repository.SheetRepositoryImp
+import com.example.tapago.data.repository.WorkoutRepositoryImp
 import com.example.tapago.domain.model.Exercise
 import com.example.tapago.domain.wrapper.IResourceRoom
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,12 +13,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class RegisterSheetViewModel(
-    private var repo: SheetRepositoryImp,
+    private var repo: WorkoutRepositoryImp,
     private var repoExercise: ExerciseRepositoryImp
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow(RegisterSheetState())
     val uiState: StateFlow<RegisterSheetState> = _uiState.asStateFlow()
+
+    fun createSheet(listExercise: List<Exercise>, nameSheet: String){
+        viewModelScope.launch {
+            repo.createSheet()
+        }
+    }
 
     fun searchExercise(searchItem: String){
         viewModelScope.launch {

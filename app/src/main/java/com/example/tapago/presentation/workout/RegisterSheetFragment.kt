@@ -41,8 +41,12 @@ class RegisterSheetFragment : Fragment() {
 
         setupRecyclerView()
         setupSearchDropdown()
-        setupListeners()
         observeViewModel()
+
+        binding.topBarMt.setOnClickListener { popBackStackSafe() }
+        binding.registerExerciseBt.setOnClickListener {
+            navigateSafe(R.id.actionRegisterSheetToRegisterExercise)
+        }
 
         setFragmentResultListener("register_request") { _, bundle ->
             val message = bundle.getString("message")
@@ -52,10 +56,26 @@ class RegisterSheetFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
-        binding.exercisesRv.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = addedExercisesAdapter
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    val namesDosExercises = state.listExercise.map { it.nameExercise }
+
+                    searchAdapter.clear()
+                    searchAdapter.addAll(namesDosExercises)
+                    searchAdapter.notifyDataSetChanged()
+
+                    addedExercisesAdapter.submitList(state.addedExercises)
+                }
+            }
+        }
+    }
+
+    private fun createSheet(){
+        binding.saveSheetBtn.setOnClickListener {
+            val listExercise = viewModel.uiState.value.addedExercises
+
         }
     }
 
@@ -77,11 +97,11 @@ class RegisterSheetFragment : Fragment() {
         binding.searchExerciseEt.setOnItemClickListener { _, _, position, _ ->
             val selectedName = searchAdapter.getItem(position)
 
-            val exerciseSelecionado = viewModel.uiState.value.listExercise.find {
+            val exerciseSelection = viewModel.uiState.value.listExercise.find {
                 it.nameExercise == selectedName
             }
 
-            exerciseSelecionado?.let { exercise ->
+            exerciseSelection?.let { exercise ->
                 viewModel.addExerciseToSheet(exercise)
             }
 
@@ -90,27 +110,10 @@ class RegisterSheetFragment : Fragment() {
         }
     }
 
-    private fun setupListeners() {
-        binding.topBarMt.setOnClickListener { popBackStackSafe() }
-
-        binding.registerExerciseBt.setOnClickListener {
-            navigateSafe(R.id.actionRegisterSheetToRegisterExercise)
-        }
-    }
-
-    private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    val namesDosExercises = state.listExercise.map { it.nameExercise }
-
-                    searchAdapter.clear()
-                    searchAdapter.addAll(namesDosExercises)
-                    searchAdapter.notifyDataSetChanged()
-
-                    addedExercisesAdapter.submitList(state.addedExercises)
-                }
-            }
+    private fun setupRecyclerView() {
+        binding.exercisesRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = addedExercisesAdapter
         }
     }
 

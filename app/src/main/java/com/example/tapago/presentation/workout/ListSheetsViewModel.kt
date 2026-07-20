@@ -2,7 +2,7 @@ package com.example.tapago.presentation.workout
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tapago.data.repository.SheetRepositoryImp
+import com.example.tapago.data.repository.WorkoutRepositoryImp
 import com.example.tapago.domain.wrapper.IResourceRoom
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ListSheetsViewModel(
-    private var repo: SheetRepositoryImp
+    private var repo: WorkoutRepositoryImp
 ): ViewModel() {
 
     private var _uiState = MutableStateFlow(ListSheetsState())

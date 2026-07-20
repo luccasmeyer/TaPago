@@ -2,7 +2,7 @@ package com.example.tapago
 
 import com.example.tapago.data.repository.ExerciseRepositoryImp
 import com.example.tapago.data.repository.ProfileRepositoryImp
-import com.example.tapago.data.repository.SheetRepositoryImp
+import com.example.tapago.data.repository.WorkoutRepositoryImp
 import com.example.tapago.presentation.menu.MenuViewModel
 import com.example.tapago.presentation.profile.ProfileViewModel
 import com.example.tapago.presentation.profile.RegisterProfileViewModel
@@ -17,7 +17,7 @@ val appModule = module {
     single { AppDatabase.getDatabase(androidContext()) }
     single { ProfileRepositoryImp(get()) }
     single { ExerciseRepositoryImp(get()) }
-    single { SheetRepositoryImp(get()) }
+    single { WorkoutRepositoryImp(get()) }
     single { get<AppDatabase>().ProfileDao() }
     single { get<AppDatabase>().SheetDao() }
     single { get<AppDatabase>().ExerciseDao() }
