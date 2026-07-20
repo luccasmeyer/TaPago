@@ -2,6 +2,41 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary_color">#0056D2</color>
-    <color name="secundary_color">#4C616B</color>
+
+    <color name="blue_primary">#0056D2</color>
+    <color name="blue_on_primary">#FFFFFF</color>
+    <color name="blue_primary_container">#D7E3FF</color>
+    <color name="blue_on_primary_container">#001B3F</color>
+
+    <color name="slate_secondary">#565E71</color>
+    <color name="slate_on_secondary">#FFFFFF</color>
+    <color name="slate_secondary_container">#DAE2F9</color>
+    <color name="slate_on_secondary_container">#131C2B</color>
+
+    <color name="teal_tertiary">#006874</color>
+    <color name="teal_on_tertiary">#FFFFFF</color>
+    <color name="teal_tertiary_container">#CFE6F1</color>
+    <color name="teal_on_tertiary_container">#001F24</color>
+
+    <color name="red_error">#BA1A1A</color>
+    <color name="red_error_container">#FFDAD6</color>
+    <color name="red_on_error">#FFFFFF</color>
+    <color name="red_on_error_container">#410002</color>
+
+    <color name="light_background">#FDFDFF</color>
+    <color name="light_on_background">#1A1C1E</color>
+    <color name="light_surface_variant">#E0E2EC</color>
+    <color name="light_on_surface_variant">#44474E</color>
+    <color name="light_outline">#74777F</color>
+    <color name="light_outline_variant">#C4C6D0</color>
+
+    <color name="dark_background">#1A1C1E</color>
+    <color name="dark_on_background">#E2E2E6</color>
+    <color name="dark_surface_variant">#44474E</color>
+    <color name="dark_on_surface_variant">#C4C6D0</color>
+    <color name="dark_outline">#8E9099</color>
+    <color name="dark_outline_variant">#44474E</color>
+
+    <color name="inverse_surface">#2F3033</color>
+    <color name="inverse_on_surface">#F1F0F4</color>
 </resources>

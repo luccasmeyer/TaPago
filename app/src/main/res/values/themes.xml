@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Base.Theme.Tapago" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary_color</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/secundary_color</item>
-        <item name="android:colorBackground">@color/white</item>
+
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorOnPrimary">@color/blue_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_on_primary_container</item>
+
+        <item name="colorSecondary">@color/slate_secondary</item>
+        <item name="colorOnSecondary">@color/slate_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/slate_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/slate_on_secondary_container</item>
+
+        <item name="colorTertiary">@color/teal_tertiary</item>
+        <item name="colorOnTertiary">@color/teal_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/teal_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/teal_on_tertiary_container</item>
+
+        <item name="colorError">@color/red_error</item>
+        <item name="colorOnError">@color/red_on_error</item>
+        <item name="colorErrorContainer">@color/red_error_container</item>
+        <item name="colorOnErrorContainer">@color/red_on_error_container</item>
+
+        <item name="android:colorBackground">@color/light_background</item>
+        <item name="colorOnBackground">@color/light_on_background</item>
+        <item name="colorSurface">@color/light_background</item>
+        <item name="colorOnSurface">@color/light_on_background</item>
+        <item name="colorSurfaceVariant">@color/light_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/light_on_surface_variant</item>
+
+        <item name="colorOutline">@color/light_outline</item>
+        <item name="colorOutlineVariant">@color/light_outline_variant</item>
+
+        <item name="colorSurfaceInverse">@color/inverse_surface</item>
+        <item name="colorOnSurfaceInverse">@color/inverse_on_surface</item>
+
     </style>
 
     <style name="Theme.Tapago" parent="Base.Theme.Tapago" />
