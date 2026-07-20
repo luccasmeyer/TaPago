@@ -7,7 +7,7 @@ import com.example.tapago.presentation.menu.MenuViewModel
 import com.example.tapago.presentation.profile.ProfileViewModel
 import com.example.tapago.presentation.profile.RegisterProfileViewModel
 import com.example.tapago.presentation.workout.RegisterSheetViewModel
-import com.example.tapago.presentation.workout.WorkoutViewModel
+import com.example.tapago.presentation.workout.ListSheetsViewModel
 import com.example.tapago.presentation.workout.exercise.RegisterExerciseViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -25,7 +25,7 @@ val appModule = module {
     viewModel { MenuViewModel() }
     viewModel { ProfileViewModel(get()) }
     viewModel { RegisterProfileViewModel(get()) }
-    viewModel { WorkoutViewModel(get()) }
+    viewModel { ListSheetsViewModel(get()) }
     viewModel { RegisterSheetViewModel(get(), get()) }
     viewModel { RegisterExerciseViewModel(get()) }
 }

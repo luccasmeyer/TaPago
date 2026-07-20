@@ -15,12 +15,12 @@ import com.example.tapago.common.navigateSafe
 import com.example.tapago.databinding.FragmentListSheetWorkoutBinding
 import kotlinx.coroutines.launch
 
-class WorkoutFragment : Fragment() {
+class ListSheetsFragment : Fragment() {
     private var _binding: FragmentListSheetWorkoutBinding? = null
     private val binding get() = _binding!!
     private lateinit var sheetAdapter: SheetAdapter
 
-    private val viewModel: WorkoutViewModel by viewModel()
+    private val viewModel: ListSheetsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

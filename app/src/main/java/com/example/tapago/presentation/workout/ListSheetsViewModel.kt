@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class WorkoutViewModel(
+class ListSheetsViewModel(
     private var repo: SheetRepositoryImp
 ): ViewModel() {
 
-    private var _uiState = MutableStateFlow(WorkoutState())
-    val uiState: StateFlow<WorkoutState> = _uiState.asStateFlow()
+    private var _uiState = MutableStateFlow(ListSheetsState())
+    val uiState: StateFlow<ListSheetsState> = _uiState.asStateFlow()
 
     fun getSheet(){
         viewModelScope.launch {
