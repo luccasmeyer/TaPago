@@ -18,7 +18,6 @@ import com.example.tapago.common.popBackStackSafe
 import com.example.tapago.common.snackbar
 import com.example.tapago.databinding.FragmentRegisterSheetBinding
 import com.example.tapago.domain.model.workout.Workout
-import com.example.tapago.domain.model.workout.WorkoutExercise
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,7 +28,9 @@ class RegisterSheetFragment : Fragment() {
     private val viewModel: RegisterSheetViewModel by viewModel()
     private lateinit var searchAdapter: ArrayAdapter<String>
     private val addedExercisesAdapter by lazy { AddedExerciseAdapter(
-        onRemoveClick = { exercise -> viewModel.removeExerciseToSheet(exercise) }
+        onRemoveClick = { exercise -> viewModel.removeExerciseToSheet(exercise) },
+        onIncrementSet = { exercise -> viewModel.incrementSet(exercise) },
+        onDecrementSet = { exercise -> viewModel.decrementSet(exercise) },
     ) }
 
     override fun onCreateView(
@@ -66,7 +67,7 @@ class RegisterSheetFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
-                    val namesDosExercises = state.listExercise.map { it.nameExercise }
+                    val namesDosExercises = state.listSearchExercise.map { it.nameExercise }
 
                     searchAdapter.clear()
                     searchAdapter.addAll(namesDosExercises)
@@ -119,7 +120,7 @@ class RegisterSheetFragment : Fragment() {
         binding.searchExerciseEt.setOnItemClickListener { _, _, position, _ ->
             val selectedName = searchAdapter.getItem(position)
 
-            val exerciseSelection = viewModel.uiState.value.listExercise.find {
+            val exerciseSelection = viewModel.uiState.value.listSearchExercise.find {
                 it.nameExercise == selectedName
             }
 

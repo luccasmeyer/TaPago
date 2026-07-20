@@ -41,7 +41,7 @@ class RegisterSheetViewModel(
                 is IResourceRoom.Success -> {
                     _uiState.update { it.copy(
                         isLoading = false,
-                        listExercise = result.data
+                        listSearchExercise = result.data
                     ) }
                 }
             }
@@ -77,5 +77,35 @@ class RegisterSheetViewModel(
         _uiState.update { it.copy(
             addedExercises = currentList
         ) }
+    }
+
+    fun incrementSet(exercise: WorkoutExercise){
+        val currentList = _uiState.value.addedExercises.toMutableList()
+
+        val index = currentList.indexOfFirst { it.nameExercise == exercise.nameExercise }
+
+        if (index != -1){
+            val exerciseUpdate = exercise.copy(qtdSets = exercise.qtdSets + 1)
+            currentList[index] = exerciseUpdate
+
+            _uiState.update { it.copy(
+                addedExercises = currentList
+            ) }
+        }
+    }
+
+    fun decrementSet(exercise: WorkoutExercise){
+        val currentList = _uiState.value.addedExercises.toMutableList()
+
+        val index = currentList.indexOfFirst { it.nameExercise == exercise.nameExercise }
+
+        if (index != -1 && exercise.qtdSets > 0){
+            val exerciseUpdate = exercise.copy(qtdSets = exercise.qtdSets-+ 1)
+            currentList[index] = exerciseUpdate
+
+            _uiState.update { it.copy(
+                addedExercises = currentList
+            ) }
+        }
     }
 }

@@ -10,7 +10,9 @@ import com.example.tapago.domain.model.Exercise
 import com.example.tapago.domain.model.workout.WorkoutExercise
 
 class AddedExerciseAdapter(
-    private val onRemoveClick: (WorkoutExercise) -> Unit
+    private val onRemoveClick: (WorkoutExercise) -> Unit,
+    private val onIncrementSet: (WorkoutExercise) -> Unit,
+    private val onDecrementSet: (WorkoutExercise) -> Unit
 ): ListAdapter<WorkoutExercise, AddedExerciseAdapter.ExerciseViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
@@ -27,11 +29,16 @@ class AddedExerciseAdapter(
     inner class ExerciseViewHolder(private val binding: LayoutExerceiseAddedItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(exercise: WorkoutExercise) {
+            binding.setsCountTv.text = exercise.qtdSets.toString()
             binding.exerciseNameTv.text = exercise.nameExercise
 
             binding.deleteExerciseBtn.setOnClickListener {
                 onRemoveClick(exercise)
             }
+
+            binding.btnPlusSets.setOnClickListener { onIncrementSet(exercise) }
+            binding.btnMinusSets.setOnClickListener { onDecrementSet(exercise) }
+
         }
     }
 

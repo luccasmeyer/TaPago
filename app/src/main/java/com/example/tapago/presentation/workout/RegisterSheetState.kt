@@ -5,6 +5,6 @@ import com.example.tapago.domain.model.workout.WorkoutExercise
 
 data class RegisterSheetState(
     val isLoading: Boolean = true,
-    val listExercise: List<Exercise> = emptyList(),
+    val listSearchExercise: List<Exercise> = emptyList(),
     val addedExercises: List<WorkoutExercise> = emptyList()
 )
