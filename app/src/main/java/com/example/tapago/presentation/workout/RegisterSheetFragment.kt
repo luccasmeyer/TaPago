@@ -28,7 +28,9 @@ class RegisterSheetFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: RegisterSheetViewModel by viewModel()
     private lateinit var searchAdapter: ArrayAdapter<String>
-    private val addedExercisesAdapter by lazy { AddedExerciseAdapter() }
+    private val addedExercisesAdapter by lazy { AddedExerciseAdapter(
+        onRemoveClick = { exercise -> viewModel.removeExerciseToSheet(exercise) }
+    ) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

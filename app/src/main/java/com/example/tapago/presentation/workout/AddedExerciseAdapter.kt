@@ -9,7 +9,9 @@ import com.example.tapago.databinding.LayoutExerceiseAddedItemBinding
 import com.example.tapago.domain.model.Exercise
 import com.example.tapago.domain.model.workout.WorkoutExercise
 
-class AddedExerciseAdapter: ListAdapter<WorkoutExercise, AddedExerciseAdapter.ExerciseViewHolder>(DiffCallback()) {
+class AddedExerciseAdapter(
+    private val onRemoveClick: (WorkoutExercise) -> Unit
+): ListAdapter<WorkoutExercise, AddedExerciseAdapter.ExerciseViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
         val binding = LayoutExerceiseAddedItemBinding.inflate(
@@ -26,6 +28,10 @@ class AddedExerciseAdapter: ListAdapter<WorkoutExercise, AddedExerciseAdapter.Ex
         RecyclerView.ViewHolder(binding.root) {
         fun bind(exercise: WorkoutExercise) {
             binding.exerciseNameTv.text = exercise.nameExercise
+
+            binding.deleteExerciseBtn.setOnClickListener {
+                onRemoveClick(exercise)
+            }
         }
     }
 

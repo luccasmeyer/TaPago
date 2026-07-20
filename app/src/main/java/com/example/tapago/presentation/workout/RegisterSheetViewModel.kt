@@ -68,4 +68,14 @@ class RegisterSheetViewModel(
             ) }
         }
     }
+
+    fun removeExerciseToSheet(exercise: WorkoutExercise){
+        val currentList  = _uiState.value.addedExercises.toMutableList()
+
+        currentList.remove(exercise)
+
+        _uiState.update { it.copy(
+            addedExercises = currentList
+        ) }
+    }
 }
