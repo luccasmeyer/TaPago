@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/workoutFragment"
-        android:name="com.example.tapago.presentation.workout.WorkoutFragment"
+        android:name="com.example.tapago.presentation.workout.ListSheetsFragment"
         android:label="WorkoutFragment">
 
         <action

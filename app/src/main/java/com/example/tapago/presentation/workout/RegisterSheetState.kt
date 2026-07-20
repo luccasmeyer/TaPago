@@ -1,6 +1,11 @@
 package com.example.tapago.presentation.workout
 
-data class RegisterSheetState(
+import com.example.tapago.domain.model.Exercise
+import com.example.tapago.domain.model.workout.WorkoutExercise
 
-    val isLoading: Boolean = true
+data class RegisterSheetState(
+    val isLoading: Boolean = true,
+    val isError: Boolean? = null,
+    val listSearchExercise: List<Exercise> = emptyList(),
+    val addedExercises: List<WorkoutExercise> = emptyList()
 )

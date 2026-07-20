@@ -13,7 +13,7 @@ interface SheetDao {
     suspend fun findAll(): List<SheetsEntity>
 
     @Insert
-    suspend fun insertSheet(sheetsEntity: SheetsEntity)
+    suspend fun insertSheet(sheetsEntity: SheetsEntity): Long
 
     @Delete
     suspend fun deleteSheet(sheetsEntity: SheetsEntity)

@@ -3,12 +3,14 @@ package com.example.tapago.data.repository
 import com.example.tapago.data.daos.ExerciseDao
 import com.example.tapago.data.entities.ExercisesEntity
 import com.example.tapago.data.utils.safeDbCall
+import com.example.tapago.domain.model.Exercise
 import com.example.tapago.domain.repository.ITaPagoRepository
 import com.example.tapago.domain.wrapper.IResourceRoom
+import com.example.tapago.data.mapper.toDomain
 
 class ExerciseRepositoryImp(
     private val dao: ExerciseDao
-): ITaPagoRepository<ExercisesEntity> {
+) : ITaPagoRepository<ExercisesEntity> {
 
     override suspend fun select(): IResourceRoom<List<ExercisesEntity>> = safeDbCall {
         dao.findAll()
@@ -30,5 +32,13 @@ class ExerciseRepositoryImp(
         item: ExercisesEntity
     ): IResourceRoom<Unit> = safeDbCall {
         dao.deleteExercise(item)
+    }
+
+    suspend fun searchExercise(searchItem: String): IResourceRoom<List<Exercise>> {
+        val exercise = dao.searchExercise(searchItem)
+
+        return safeDbCall {
+            exercise.map { it.toDomain() }
+        }
     }
 }

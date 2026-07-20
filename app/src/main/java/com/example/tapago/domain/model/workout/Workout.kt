@@ -1,4 +1,4 @@
-package com.example.tapago.domain.model
+package com.example.tapago.domain.model.workout
 
 data class Workout (
 
