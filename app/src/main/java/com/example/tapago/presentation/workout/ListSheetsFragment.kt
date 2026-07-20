@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tapago.R
 import com.example.tapago.common.navigateSafe
+import com.example.tapago.common.snackbar
 import com.example.tapago.databinding.FragmentListSheetWorkoutBinding
 import kotlinx.coroutines.launch
 
@@ -38,6 +40,13 @@ class ListSheetsFragment : Fragment() {
         observeViewModel()
         navigateNewSheet()
         viewModel.getSheet()
+
+        setFragmentResultListener("register_sheet") {_, bundle ->
+            val message = bundle.getString("message")
+            if(message != null){
+                snackbar(message)
+            }
+        }
     }
 
     private fun setupRecyclerView() {

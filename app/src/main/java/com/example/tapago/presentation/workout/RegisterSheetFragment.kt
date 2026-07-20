@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tapago.R
 import com.example.tapago.common.navigateSafe
+import com.example.tapago.common.observe
 import com.example.tapago.common.popBackStackSafe
 import com.example.tapago.common.snackbar
 import com.example.tapago.databinding.FragmentRegisterSheetBinding
@@ -59,6 +62,16 @@ class RegisterSheetFragment : Fragment() {
             val message = bundle.getString("message")
             if (message != null) {
                 snackbar(message)
+            }
+        }
+
+        observe(viewModel.uiState){ state ->
+            if (state.isError == false){
+                setFragmentResult(
+                    "register_sheet",
+                    bundleOf("message" to "Ficha criada com sucesso")
+                )
+                popBackStackSafe()
             }
         }
     }

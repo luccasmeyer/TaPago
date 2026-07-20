@@ -26,25 +26,31 @@ class WorkoutRepositoryImp(
         return safeDbCall { sheet.map { it.toDomain() } }
     }
 
-    suspend fun createSheet(workout: Workout){
+    suspend fun createSheet(workout: Workout): IResourceRoom<Unit> {
+        return try {
+            val sheetEntity = SheetsEntity(
+                nameSheet = workout.nameSheet,
+                qtdExercise = workout.listExercise.size
+            )
 
-        val sheetEntity = SheetsEntity(
-            nameSheet = workout.nameSheet,
-            qtdExercise = workout.listExercise.size
-        )
+            database.withTransaction {
+                val sheetId = sheetDao.insertSheet(sheetEntity)
 
-        database.withTransaction {
-            val sheetId = sheetDao.insertSheet(sheetEntity)
+                val sheetBodyList = workout.listExercise.map { exercise ->
+                    ExercisesSheetEntity(
+                        exerciseId = exercise.idExercise,
+                        sheetId = sheetId.toInt(),
+                        qtdSets = exercise.qtdSets
+                    )
+                }
 
-            val sheetBodyList = workout.listExercise.map { exercise ->
-                ExercisesSheetEntity(
-                    exerciseId = exercise.idExercise,
-                    sheetId = sheetId.toInt(),
-                    qtdSets = exercise.qtdSets
-                )
+                exerciseSheetDao.insertExercisesSheet(sheetBodyList)
             }
 
-            exerciseSheetDao.insertExercisesSheet(sheetBodyList)
+            IResourceRoom.Success(Unit)
+
+        } catch (e: Exception) {
+            IResourceRoom.Error(e.message ?: "Erro ao salvar a planilha")
         }
     }
 

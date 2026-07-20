@@ -24,7 +24,20 @@ class RegisterSheetViewModel(
 
     fun createSheet(workout: Workout){
         viewModelScope.launch {
-            repo.createSheet(workout)
+            val result = repo.createSheet(workout)
+
+            when(result){
+                is IResourceRoom.Success -> {
+                    _uiState.update { it.copy(
+                        isError = false
+                    ) }
+                }
+                is IResourceRoom.Error -> {
+                    _uiState.update { it.copy(
+                        isError = true
+                    ) }
+                }
+            }
         }
     }
 
@@ -35,7 +48,7 @@ class RegisterSheetViewModel(
             when(result){
                 is IResourceRoom.Error -> {
                     _uiState.update { it.copy(
-                        isLoading = false
+                        isLoading = false,
                     ) }
                 }
                 is IResourceRoom.Success -> {
