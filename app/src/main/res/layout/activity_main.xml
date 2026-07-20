@@ -11,15 +11,18 @@
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/include_botton_menu" />
 
     <include
         android:id="@+id/include_botton_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/layout_bottom_menu_view"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        layout="@layout/layout_bottom_menu_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
