@@ -4,26 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.collection.buildObjectIntMap
+import android.widget.ArrayAdapter
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.tapago.R
 import com.example.tapago.common.navigateSafe
 import com.example.tapago.common.popBackStackSafe
 import com.example.tapago.common.snackbar
 import com.example.tapago.databinding.FragmentRegisterSheetBinding
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RegisterSheetFragment: Fragment() {
+class RegisterSheetFragment : Fragment() {
     private var _binding: FragmentRegisterSheetBinding? = null
     private val binding get() = _binding!!
     private val viewModel: RegisterSheetViewModel by viewModel()
+    private lateinit var searchAdapter: ArrayAdapter<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -31,18 +37,67 @@ class RegisterSheetFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.topBarMt.setOnClickListener { popBackStackSafe() }
-        navigateRegisterExercise()
+        setupSearchDropdown()
+        setupListeners()
+        observeViewModel()
 
-        setFragmentResultListener("register_request") { requestKey, bundle ->
+        setFragmentResultListener("register_request") { _, bundle ->
             val message = bundle.getString("message")
-            if(message != null){
+            if (message != null) {
                 snackbar(message)
             }
         }
     }
 
-    private fun navigateRegisterExercise(){
+    private fun setupSearchDropdown() {
+        searchAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            mutableListOf()
+        )
+        binding.searchExerciseEt.setAdapter(searchAdapter)
+
+        binding.searchExerciseEt.doOnTextChanged { text, _, _, _ ->
+            val query = text?.toString() ?: ""
+            if (query.isNotEmpty()) {
+                viewModel.searchExercise(query)
+            }
+        }
+
+        binding.searchExerciseEt.setOnItemClickListener { _, _, position, _ ->
+            val selectedName = searchAdapter.getItem(position)
+
+            val exerciseSelection = viewModel.uiState.value.listExercise.find {
+                it.nameExercise == selectedName
+            }
+
+            if (exerciseSelection != null) {
+
+            }
+
+            binding.searchExerciseEt.text?.clear()
+            binding.searchExerciseEt.clearFocus()
+        }
+    }
+
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+
+                    val namesDosExercises = state.listExercise.map { it.nameExercise }
+
+                    searchAdapter.clear()
+                    searchAdapter.addAll(namesDosExercises)
+                    searchAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.topBarMt.setOnClickListener { popBackStackSafe() }
+
         binding.registerExerciseBt.setOnClickListener {
             navigateSafe(R.id.actionRegisterSheetToRegisterExercise)
         }

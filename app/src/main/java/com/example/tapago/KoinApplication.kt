@@ -26,6 +26,6 @@ val appModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { RegisterProfileViewModel(get()) }
     viewModel { WorkoutViewModel(get()) }
-    viewModel { RegisterSheetViewModel(get()) }
+    viewModel { RegisterSheetViewModel(get(), get()) }
     viewModel { RegisterExerciseViewModel(get()) }
 }
