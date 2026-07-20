@@ -39,4 +39,15 @@ class RegisterSheetViewModel(
             }
         }
     }
+
+    fun addExerciseToSheet(exercise: Exercise) {
+        val currentList = _uiState.value.addedExercises.toMutableList()
+
+        if (!currentList.contains(exercise)) {
+            currentList.add(exercise)
+            _uiState.update { it.copy(
+                addedExercises = currentList
+            ) }
+        }
+    }
 }

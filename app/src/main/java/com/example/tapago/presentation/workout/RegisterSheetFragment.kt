@@ -11,6 +11,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tapago.R
 import com.example.tapago.common.navigateSafe
 import com.example.tapago.common.popBackStackSafe
@@ -24,6 +25,7 @@ class RegisterSheetFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: RegisterSheetViewModel by viewModel()
     private lateinit var searchAdapter: ArrayAdapter<String>
+    private val addedExercisesAdapter by lazy { AddedExerciseAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +39,7 @@ class RegisterSheetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
         setupSearchDropdown()
         setupListeners()
         observeViewModel()
@@ -46,6 +49,13 @@ class RegisterSheetFragment : Fragment() {
             if (message != null) {
                 snackbar(message)
             }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.exercisesRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = addedExercisesAdapter
         }
     }
 
@@ -67,31 +77,16 @@ class RegisterSheetFragment : Fragment() {
         binding.searchExerciseEt.setOnItemClickListener { _, _, position, _ ->
             val selectedName = searchAdapter.getItem(position)
 
-            val exerciseSelection = viewModel.uiState.value.listExercise.find {
+            val exerciseSelecionado = viewModel.uiState.value.listExercise.find {
                 it.nameExercise == selectedName
             }
 
-            if (exerciseSelection != null) {
-
+            exerciseSelecionado?.let { exercise ->
+                viewModel.addExerciseToSheet(exercise)
             }
 
             binding.searchExerciseEt.text?.clear()
             binding.searchExerciseEt.clearFocus()
-        }
-    }
-
-    private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-
-                    val namesDosExercises = state.listExercise.map { it.nameExercise }
-
-                    searchAdapter.clear()
-                    searchAdapter.addAll(namesDosExercises)
-                    searchAdapter.notifyDataSetChanged()
-                }
-            }
         }
     }
 
@@ -100,6 +95,22 @@ class RegisterSheetFragment : Fragment() {
 
         binding.registerExerciseBt.setOnClickListener {
             navigateSafe(R.id.actionRegisterSheetToRegisterExercise)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    val namesDosExercises = state.listExercise.map { it.nameExercise }
+
+                    searchAdapter.clear()
+                    searchAdapter.addAll(namesDosExercises)
+                    searchAdapter.notifyDataSetChanged()
+
+                    addedExercisesAdapter.submitList(state.addedExercises)
+                }
+            }
         }
     }
 
