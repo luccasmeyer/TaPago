@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sheet_exercise_graph"
+    app:startDestination="@id/listExerciseSheet">
+
+    <fragment
+        android:id="@+id/listExerciseSheet"
+        android:name="com.example.tapago.presentation.workout.exercise_sheet.ListExerciseSheetFragment"
+        android:label="ListExerciseSheetFragment">
+    </fragment>
+
+</navigation>

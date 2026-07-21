@@ -37,6 +37,10 @@
         <action
             android:id="@+id/actionWorkoutToRegisterWorkout"
             app:destination="@+id/register_sheet_graph"/>
+
+        <action
+            android:id="@+id/actionWorkoutToExerciseSheet"
+            app:destination="@+id/sheet_exercise_graph"/>
     </fragment>
 
     <include app:graph="@navigation/register_sheet_graph"/>

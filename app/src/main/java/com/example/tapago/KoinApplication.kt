@@ -17,7 +17,7 @@ val appModule = module {
     single { AppDatabase.getDatabase(androidContext()) }
     single { ProfileRepositoryImp(get()) }
     single { ExerciseRepositoryImp(get()) }
-    single { WorkoutRepositoryImp(get(), get(), get()) }
+    single { WorkoutRepositoryImp(get(), get(), get(), get()) }
     single { get<AppDatabase>().ProfileDao() }
     single { get<AppDatabase>().SheetDao() }
     single { get<AppDatabase>().ExerciseDao() }

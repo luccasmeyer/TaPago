@@ -22,11 +22,22 @@
             app:navigationIcon="@drawable/arrow_back_ios_24dp" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:id="@+id/name_sheet_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        tools:text="NOME DA FICHA"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_exercise_sheet_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar_list"
+        app:layout_constraintTop_toBottomOf="@+id/name_sheet_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/layout_exercise_sheet_item"

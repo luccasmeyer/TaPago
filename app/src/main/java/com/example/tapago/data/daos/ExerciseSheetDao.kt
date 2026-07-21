@@ -18,20 +18,17 @@ interface ExerciseSheetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExercisesSheet(sheetBodyList: List<ExercisesSheetEntity>)
 
-    @Query(
-        "SELECT " +
-                "   C.nameExercise, A.quantSets " +
-                "FROM " +
-                "   EXERCISES_SHEET A " +
-                "INNER JOIN " +
-                "   SHEETS B " +
-                "ON " +
-                "   A.exerciseId = b.sheetId " +
-                "INNER JOIN " +
-                "   EXERCISES C " +
-                "ON " +
-                "   A.exerciseId = C.exerciseId " +
-                "WHERE " +
-                "   B.sheetId = :itemSheet")
+    @Query("""
+    SELECT 
+        * 
+    FROM 
+        EXERCISES_SHEET A
+    INNER JOIN SHEETS B 
+    ON A.sheetId = B.sheetId
+    INNER JOIN EXERCISES C 
+    ON A.exerciseId = C.exerciseId
+    WHERE 
+        B.sheetId = :itemSheet
+""")
     suspend fun getExerciseSheet(itemSheet: Int): List<ExercisesSheetEntity>
 }
