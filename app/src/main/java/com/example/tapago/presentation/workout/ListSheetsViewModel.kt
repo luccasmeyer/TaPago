@@ -29,7 +29,7 @@ class ListSheetsViewModel(
                 is IResourceRoom.Success -> {
                     _uiState.update { it.copy(
                         isLoanding = false,
-                        sheet = result.data
+                        sheets = result.data
                     ) }
                 }
                 is IResourceRoom.Error -> {

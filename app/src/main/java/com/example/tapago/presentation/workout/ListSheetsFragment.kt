@@ -64,7 +64,7 @@ class ListSheetsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 viewModel.uiState.collect { state ->
-                    state.sheet?.let { listaFichas ->
+                    state.sheets?.let { listaFichas ->
                         sheetAdapter.submitList(listaFichas)
                     }
                 }

@@ -2,6 +2,7 @@ package com.example.tapago.data.repository
 
 import androidx.room.withTransaction
 import com.example.tapago.AppDatabase
+import com.example.tapago.data.daos.ExerciseDao
 import com.example.tapago.data.daos.ExerciseSheetDao
 import com.example.tapago.data.daos.SheetDao
 import com.example.tapago.data.entities.ExercisesSheetEntity
@@ -10,6 +11,7 @@ import com.example.tapago.data.mapper.toDomain
 import com.example.tapago.data.utils.safeDbCall
 import com.example.tapago.domain.model.Sheet
 import com.example.tapago.domain.model.workout.Workout
+import com.example.tapago.domain.model.workout.WorkoutExercise
 import com.example.tapago.domain.repository.ITaPagoRepository
 import com.example.tapago.domain.wrapper.IResourceRoom
 import kotlin.collections.map
@@ -17,7 +19,8 @@ import kotlin.collections.map
 class WorkoutRepositoryImp(
     private var database: AppDatabase,
     private var sheetDao: SheetDao,
-    private var exerciseSheetDao: ExerciseSheetDao
+    private var exerciseSheetDao: ExerciseSheetDao,
+    private var exerciseDao: ExerciseDao
 ): ITaPagoRepository<SheetsEntity>{
 
     suspend fun selectSheet(): IResourceRoom<List<Sheet>>{
@@ -51,6 +54,17 @@ class WorkoutRepositoryImp(
 
         } catch (e: Exception) {
             IResourceRoom.Error(e.message ?: "Erro ao salvar a planilha")
+        }
+    }
+
+    suspend fun getExerciseSheet(itemSheet: Int): IResourceRoom<List<WorkoutExercise>> {
+        val result = exerciseSheetDao.getExerciseSheet(itemSheet)
+
+        return safeDbCall {
+            val idExercise = result.map { it.exerciseId }
+            val nameExercise = exerciseDao.getNameExercise(idExercise)
+
+            result.map { it.toDomain(nameExercise) }
         }
     }
 
