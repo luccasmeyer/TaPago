@@ -8,6 +8,10 @@
         android:id="@+id/listExerciseSheet"
         android:name="com.example.tapago.presentation.workout.exercise_sheet.ListExerciseSheetFragment"
         android:label="ListExerciseSheetFragment">
+
+        <argument
+            android:name="idSheet"
+            app:argType="integer"/>
     </fragment>
 
 </navigation>

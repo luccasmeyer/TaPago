@@ -9,7 +9,7 @@ import com.example.tapago.databinding.LayoutSheetWorkoutItemBinding
 import com.example.tapago.domain.model.Sheet // Import do seu modelo
 
 class SheetAdapter(
-    private val onItemClick: ((Sheet) -> Unit)? = null
+    private val onItemClick: ((Int) -> Unit)? = null
 ) : ListAdapter<Sheet, SheetAdapter.SheetViewHolder>(SheetDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SheetViewHolder {
@@ -33,8 +33,8 @@ class SheetAdapter(
         fun bind(sheet: Sheet) {
             binding.nameSheetTv.text = sheet.nameSheet
 
-            binding.root.setOnClickListener {
-                onItemClick?.invoke(sheet)
+            binding.startWorkoutMb.setOnClickListener {
+                onItemClick?.invoke(sheet.idSheet)
             }
         }
     }

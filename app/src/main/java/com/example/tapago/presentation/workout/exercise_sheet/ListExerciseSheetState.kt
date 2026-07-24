@@ -2,5 +2,7 @@ package com.example.tapago.presentation.workout.exercise_sheet
 
 data class ListExerciseSheetState(
 
-    val isLoanding: Boolean = true
+    val isLoanding: Boolean = true,
+    val message:String? = null
+
 )

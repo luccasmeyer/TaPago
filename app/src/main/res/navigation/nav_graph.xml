@@ -44,4 +44,5 @@
     </fragment>
 
     <include app:graph="@navigation/register_sheet_graph"/>
+    <include app:graph="@navigation/sheet_exercise_graph"/>
 </navigation>
