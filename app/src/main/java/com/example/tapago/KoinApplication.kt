@@ -9,6 +9,7 @@ import com.example.tapago.presentation.profile.RegisterProfileViewModel
 import com.example.tapago.presentation.workout.RegisterSheetViewModel
 import com.example.tapago.presentation.workout.ListSheetsViewModel
 import com.example.tapago.presentation.workout.exercise.RegisterExerciseViewModel
+import com.example.tapago.presentation.workout.exercise_sheet.ListExerciseSheetViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -17,7 +18,7 @@ val appModule = module {
     single { AppDatabase.getDatabase(androidContext()) }
     single { ProfileRepositoryImp(get()) }
     single { ExerciseRepositoryImp(get()) }
-    single { WorkoutRepositoryImp(get(), get(), get()) }
+    single { WorkoutRepositoryImp(get(), get(), get(), get()) }
     single { get<AppDatabase>().ProfileDao() }
     single { get<AppDatabase>().SheetDao() }
     single { get<AppDatabase>().ExerciseDao() }
@@ -29,4 +30,5 @@ val appModule = module {
     viewModel { ListSheetsViewModel(get()) }
     viewModel { RegisterSheetViewModel(get(), get()) }
     viewModel { RegisterExerciseViewModel(get()) }
+    viewModel { ListExerciseSheetViewModel(get()) }
 }

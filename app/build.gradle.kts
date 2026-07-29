@@ -2,6 +2,7 @@ val room_version = "2.8.4"
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {

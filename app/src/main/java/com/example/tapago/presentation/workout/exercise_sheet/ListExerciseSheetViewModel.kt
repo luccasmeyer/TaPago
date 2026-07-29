@@ -1,4 +1,4 @@
-package com.example.tapago.presentation.workout
+package com.example.tapago.presentation.workout.exercise_sheet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,31 +10,27 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ListSheetsViewModel(
+class ListExerciseSheetViewModel(
     private var repo: WorkoutRepositoryImp
 ): ViewModel() {
+    private var _uiState = MutableStateFlow(ListExerciseSheetState())
+    val uiState: StateFlow<ListExerciseSheetState> = _uiState.asStateFlow()
 
-    private var _uiState = MutableStateFlow(ListSheetsState())
-    val uiState: StateFlow<ListSheetsState> = _uiState.asStateFlow()
-
-    fun getSheet(){
+    fun getWorkout(idSheet: Int){
         viewModelScope.launch {
-            _uiState.update { it.copy(
-                isLoanding = true
-            ) }
+            val result = repo.getExerciseSheet(idSheet)
 
-            when(
-                val result = repo.selectSheet()
-            ){
+            when(result){
                 is IResourceRoom.Success -> {
                     _uiState.update { it.copy(
                         isLoanding = false,
-                        sheets = result.data
+                        workout = result.data
                     ) }
                 }
                 is IResourceRoom.Error -> {
                     _uiState.update { it.copy(
                         isLoanding = false,
+                        message = "Erro para consultar o treino ${result.message}"
                     ) }
                 }
             }

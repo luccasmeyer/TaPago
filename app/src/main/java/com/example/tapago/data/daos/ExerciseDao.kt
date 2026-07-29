@@ -20,4 +20,7 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM exercises WHERE nameExercise LIKE '%' || :searchItem || '%'")
     suspend fun searchExercise(searchItem: String): List<ExercisesEntity>
+
+    @Query("SELECT nameExercise FROM exercises WHERE :idExercise")
+    suspend fun getNameExercise(idExercise: List<Int>): List<String>
 }

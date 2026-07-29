@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.tapago.presentation.menu.MenuFragment"
-        android:label="MenuFragment"/>
+        android:label="MenuFragment" />
 
     <fragment
         android:id="@+id/profileFragment"
@@ -16,7 +16,7 @@
 
         <action
             android:id="@+id/actionRegisterProfile"
-            app:destination="@+id/registerProfile"/>
+            app:destination="@+id/registerProfile" />
     </fragment>
 
     <fragment
@@ -26,7 +26,7 @@
 
         <action
             android:id="@+id/actionRegisterProfileToProfile"
-            app:destination="@+id/profileFragment"/>
+            app:destination="@+id/profileFragment" />
     </fragment>
 
     <fragment
@@ -37,7 +37,12 @@
         <action
             android:id="@+id/actionWorkoutToRegisterWorkout"
             app:destination="@+id/register_sheet_graph"/>
+
+        <action
+            android:id="@+id/actionWorkoutToExerciseSheet"
+            app:destination="@+id/sheet_exercise_graph"/>
     </fragment>
 
     <include app:graph="@navigation/register_sheet_graph"/>
+    <include app:graph="@navigation/sheet_exercise_graph"/>
 </navigation>

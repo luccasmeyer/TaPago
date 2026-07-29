@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,7 +21,13 @@ import kotlinx.coroutines.launch
 class ListSheetsFragment : Fragment() {
     private var _binding: FragmentListSheetWorkoutBinding? = null
     private val binding get() = _binding!!
-    private lateinit var sheetAdapter: SheetAdapter
+    private val sheetAdapter by lazy {
+        SheetAdapter { idSheet ->
+            navigateSafe(R.id.actionWorkoutToExerciseSheet, bundleOf(
+                "idSheet" to idSheet
+            ))
+        }
+    }
 
     private val viewModel: ListSheetsViewModel by viewModel()
 
@@ -41,7 +48,7 @@ class ListSheetsFragment : Fragment() {
         navigateNewSheet()
         viewModel.getSheet()
 
-        setFragmentResultListener("register_sheet") {_, bundle ->
+        setFragmentResultListener("register_sheet") { _, bundle ->
             val message = bundle.getString("message")
             if(message != null){
                 snackbar(message)
@@ -50,9 +57,6 @@ class ListSheetsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        sheetAdapter = SheetAdapter { sheetClicada ->
-
-        }
         binding.listSheetWorkoutRv.apply {
             adapter = sheetAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -62,10 +66,9 @@ class ListSheetsFragment : Fragment() {
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
                 viewModel.uiState.collect { state ->
-                    state.sheet?.let { listaFichas ->
-                        sheetAdapter.submitList(listaFichas)
+                    state.sheets?.let { listSheets ->
+                        sheetAdapter.submitList(listSheets)
                     }
                 }
             }
