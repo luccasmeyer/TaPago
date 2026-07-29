@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class SheetsEntity(
     @PrimaryKey(autoGenerate = true) val sheetId: Int = 0,
     @ColumnInfo("nameSheet") val nameSheet: String,
-    @ColumnInfo("quantExercise") val qtdExercise: Int
+    @ColumnInfo("quantExercise") val qtdExercise: Int,
+    @ColumnInfo("workoutStatus") val workoutStatus: Boolean? = null
 )

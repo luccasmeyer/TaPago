@@ -5,6 +5,8 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.tapago.common.Converters
 import com.example.tapago.data.daos.ExerciseDao
 import com.example.tapago.data.daos.ExerciseSheetDao
 import com.example.tapago.data.daos.ProfileDao
@@ -24,12 +26,13 @@ import com.example.tapago.data.entities.SheetsEntity
         SetsExerciseSheetsEntity::class,
         ProfileEntity::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 2, to = 3)
+        AutoMigration(from = 3, to = 4)
     ]
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun ExerciseDao(): ExerciseDao
     abstract fun SheetDao(): SheetDao
