@@ -38,8 +38,9 @@ interface ExerciseSheetDao {
     data class SheetComplete(
         @Embedded val sheet: SheetsEntity,
         @Relation(
-            parentColumn = "SheetId",
-            entityColumn = "SheetId"
+            entity = ExercisesSheetEntity::class,
+            parentColumn = "sheetId",
+            entityColumn = "sheetId"
         )
         val exercises: List<ExerciseSheetComplete>
     )

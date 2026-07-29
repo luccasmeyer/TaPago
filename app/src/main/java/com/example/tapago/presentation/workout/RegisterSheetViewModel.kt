@@ -71,6 +71,7 @@ class RegisterSheetViewModel(
                 nameExercise = exercise.nameExercise,
                 qtdSets = 0,
                 listSets = emptyList(),
+                typeExercise = exercise.typeExercise,
                 idExercise = exercise.idExerceise,
             )
 

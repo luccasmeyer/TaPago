@@ -4,6 +4,10 @@
     android:id="@+id/sheet_exercise_graph"
     app:startDestination="@id/listExerciseSheet">
 
+    <argument
+        android:name="idSheet"
+        app:argType="integer"/>
+
     <fragment
         android:id="@+id/listExerciseSheet"
         android:name="com.example.tapago.presentation.workout.exercise_sheet.ListExerciseSheetFragment"

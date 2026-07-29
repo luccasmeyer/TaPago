@@ -22,6 +22,7 @@ fun ExerciseSheetDao.ExerciseSheetComplete.toDomain(): WorkoutExercise{
         idExercise = this.exercise.exerciseId,
         nameExercise = this.exercise.nameExercise.trim(),
         qtdSets = this.sets.size,
+        typeExercise = this.exercise.typeExrcise,
         listSets = this.sets.map { setsExerciseSheetsEntity ->
             setsExerciseSheetsEntity.toDomain()
         }
