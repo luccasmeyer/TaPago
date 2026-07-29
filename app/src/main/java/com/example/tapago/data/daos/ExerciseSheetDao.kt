@@ -8,6 +8,7 @@ import androidx.room.Junction
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Relation
+import androidx.room.Transaction
 import com.example.tapago.data.entities.ExercisesEntity
 import com.example.tapago.data.entities.ExercisesSheetEntity
 import com.example.tapago.data.entities.SetsExerciseSheetsEntity
@@ -19,33 +20,28 @@ import com.example.tapago.domain.model.workout.WorkoutExercise
 @Dao
 interface ExerciseSheetDao {
 
-    data class SheetWithExercisesSetup(
-        @Embedded val sheet: SheetsEntity,
-        @Relation(
-            parentColumn = "sheetId",
-            entityColumn = "sheetId",
-        )
-        val exercise: List<ExercisesSheetEntity>
-    )
-
-    data class ExerciseWithSetsSetup(
+    data class ExerciseSheetComplete(
         @Embedded val exerciseSheet: ExercisesSheetEntity,
         @Relation(
             parentColumn = "exerciseId",
-            entityColumn = "exerciseId",
-            associateBy = Junction(SetsExerciseSheetsEntity::class)
+            entityColumn = "exerciseId"
         )
-        val setsExercise: List<SetsExerciseSheetsEntity>
+        val exercise: ExercisesEntity,
+
+        @Relation(
+            parentColumn = "exerciseSheetId",
+            entityColumn = "exerciseSheetId"
+        )
+        val sets: List<SetsExerciseSheetsEntity>
     )
 
-    data class ExerciseWithDetalisSetup(
-        @Embedded val exercise: ExercisesSheetEntity,
+    data class SheetComplete(
+        @Embedded val sheet: SheetsEntity,
         @Relation(
-            parentColumn = "exerciseId",
-            entityColumn = "exerciseId",
-            associateBy = Junction(ExercisesSheetEntity::class)
+            parentColumn = "SheetId",
+            entityColumn = "SheetId"
         )
-        val exerciseDetalis: List<ExercisesEntity>
+        val exercises: List<ExerciseSheetComplete>
     )
 
     @Query("SELECT * FROM exercises_sheet")
@@ -54,17 +50,7 @@ interface ExerciseSheetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExercisesSheet(sheetBodyList: List<ExercisesSheetEntity>)
 
-    @Query("""
-    SELECT 
-        * 
-    FROM 
-        EXERCISES_SHEET A
-    INNER JOIN SHEETS B
-    ON A.sheetId = B.sheetId
-    INNER JOIN EXERCISES C 
-    ON A.exerciseId = C.exerciseId
-    WHERE 
-        B.sheetId = :itemSheet
-""")
-    suspend fun getExerciseSheet(itemSheet: Int): List<ExercisesSheetEntity>
+    @Transaction
+    @Query("SELECT * FROM sheets WHERE sheetId = :itemSheet")
+    suspend fun getExerciseSheet(itemSheet: Int): SheetComplete
 }

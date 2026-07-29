@@ -21,9 +21,9 @@ class WorkoutRepositoryImp(
     private var sheetDao: SheetDao,
     private var exerciseSheetDao: ExerciseSheetDao,
     private var exerciseDao: ExerciseDao
-): ITaPagoRepository<SheetsEntity>{
+) : ITaPagoRepository<SheetsEntity> {
 
-    suspend fun selectSheet(): IResourceRoom<List<Sheet>>{
+    suspend fun selectSheet(): IResourceRoom<List<Sheet>> {
         val sheet = sheetDao.findAll()
 
         return safeDbCall { sheet.map { it.toDomain() } }
@@ -56,18 +56,13 @@ class WorkoutRepositoryImp(
         }
     }
 
-    suspend fun getExerciseSheet(itemSheet: Int): IResourceRoom<List<WorkoutExercise>> {
+    suspend fun getExerciseSheet(itemSheet: Int): IResourceRoom<Workout> {
         val result = exerciseSheetDao.getExerciseSheet(itemSheet)
 
-        return safeDbCall {
-            val idExercise = result.map { it.exerciseId }
-            val nameExercise = exerciseDao.getNameExercise(idExercise)
-
-            result.map { it.toDomain(nameExercise) }
-        }
+        return safeDbCall { result.toDomain() }
     }
 
-    override suspend fun select(): IResourceRoom<List<SheetsEntity>>  = safeDbCall {
+    override suspend fun select(): IResourceRoom<List<SheetsEntity>> = safeDbCall {
         sheetDao.findAll()
     }
 
