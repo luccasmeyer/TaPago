@@ -7,7 +7,7 @@ fun ExercisesSheetEntity.toDomain(nameExercise: List<String>): WorkoutExercise{
     return WorkoutExercise(
         idExercise = this.exerciseId,
         nameExercise = nameExercise.toString(),
-        qtdSets = this.qtdSets,
+        qtdSets = TODO(),
         listSets = emptyList()
     )
 }

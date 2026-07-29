@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "db17d2e696207d62e7eb534cd259ff53",
+    "identityHash": "626aef78e37aca589ac1fe0ff190514e",
     "entities": [
       {
         "tableName": "exercises",
@@ -66,7 +66,7 @@
       },
       {
         "tableName": "exercises_sheet",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`exerciseSheetId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `exerciseId` INTEGER NOT NULL, `sheetId` INTEGER NOT NULL, `quantSets` INTEGER NOT NULL, FOREIGN KEY(`exerciseId`) REFERENCES `exercises`(`exerciseId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`sheetId`) REFERENCES `sheets`(`sheetId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`exerciseSheetId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `exerciseId` INTEGER NOT NULL, `sheetId` INTEGER NOT NULL, FOREIGN KEY(`exerciseId`) REFERENCES `exercises`(`exerciseId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`sheetId`) REFERENCES `sheets`(`sheetId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "exerciseSheetId",
@@ -83,12 +83,6 @@
           {
             "fieldPath": "sheetId",
             "columnName": "sheetId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "qtdSets",
-            "columnName": "quantSets",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -126,7 +120,7 @@
       },
       {
         "tableName": "sets_exercise_sheet",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`setId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `numSet` INTEGER NOT NULL, `numRep` INTEGER NOT NULL, `weight` REAL NOT NULL, `exerciseSheetId` INTEGER NOT NULL, FOREIGN KEY(`exerciseSheetId`) REFERENCES `exercises_sheet`(`exerciseSheetId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`setId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `numSet` INTEGER NOT NULL, `numReps` INTEGER NOT NULL, `weight` REAL NOT NULL, `exerciseSheetId` INTEGER NOT NULL, FOREIGN KEY(`exerciseSheetId`) REFERENCES `exercises_sheet`(`exerciseSheetId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "setId",
@@ -142,7 +136,7 @@
           },
           {
             "fieldPath": "numRep",
-            "columnName": "numRep",
+            "columnName": "numReps",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -218,7 +212,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'db17d2e696207d62e7eb534cd259ff53')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '626aef78e37aca589ac1fe0ff190514e')"
     ]
   }
 }

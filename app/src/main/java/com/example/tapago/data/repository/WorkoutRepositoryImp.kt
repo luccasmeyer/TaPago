@@ -42,8 +42,7 @@ class WorkoutRepositoryImp(
                 val sheetBodyList = workout.listExercise.map { exercise ->
                     ExercisesSheetEntity(
                         exerciseId = exercise.idExercise,
-                        sheetId = sheetId.toInt(),
-                        qtdSets = exercise.qtdSets
+                        sheetId = sheetId.toInt()
                     )
                 }
 

@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
 data class SetsExerciseSheetsEntity(
     @PrimaryKey(autoGenerate = true) val setId: Int = 0,
     @ColumnInfo("numSet") val numPed: Int,
-    @ColumnInfo("numRep") val numRep: Int,
+    @ColumnInfo("numReps") val numRep: Int,
     @ColumnInfo("weight") val weight: Double,
     @ColumnInfo("exerciseSheetId") val exervieSheetId: Int
 )
