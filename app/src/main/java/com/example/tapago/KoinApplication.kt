@@ -23,6 +23,7 @@ val appModule = module {
     single { get<AppDatabase>().SheetDao() }
     single { get<AppDatabase>().ExerciseDao() }
     single { get<AppDatabase>().ExerciseSheetDao() }
+    single { get<AppDatabase>().SetExerciseSheetDao() }
 
     viewModel { MenuViewModel() }
     viewModel { ProfileViewModel(get()) }

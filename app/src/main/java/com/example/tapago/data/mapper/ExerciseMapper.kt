@@ -5,7 +5,7 @@ import com.example.tapago.domain.model.Exercise
 
 fun ExercisesEntity.toDomain(): Exercise {
     return Exercise(
-        idExerceise = this.exerciseId,
+        idExercise = this.exerciseId,
         nameExercise = this.nameExercise,
         typeExercise = this.typeExrcise
     )

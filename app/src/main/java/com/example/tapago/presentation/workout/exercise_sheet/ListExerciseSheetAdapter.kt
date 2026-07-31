@@ -29,11 +29,9 @@ class ListExerciseSheetAdapter : ListAdapter<WorkoutExercise, ListExerciseSheetA
 
         fun bind(item: WorkoutExercise) {
 
-            val qtdSets = item.listSets.size + 1
-
             binding.nameExerciseTv.text = item.nameExercise
             binding.groupMuscleTv.text = item.typeExercise
-            binding.setsNumberTv.text = "${qtdSets} Series"
+            binding.setsNumberTv.text = "${item.qtdSets} Series"
         }
     }
     companion object DiffCallback : DiffUtil.ItemCallback<WorkoutExercise>() {

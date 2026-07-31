@@ -1,17 +1,18 @@
 package com.example.tapago.data.repository
 
+import android.util.Log
 import androidx.room.withTransaction
 import com.example.tapago.AppDatabase
-import com.example.tapago.data.daos.ExerciseDao
 import com.example.tapago.data.daos.ExerciseSheetDao
+import com.example.tapago.data.daos.SetExerciseSheetDao
 import com.example.tapago.data.daos.SheetDao
 import com.example.tapago.data.entities.ExercisesSheetEntity
+import com.example.tapago.data.entities.SetsExerciseSheetsEntity
 import com.example.tapago.data.entities.SheetsEntity
 import com.example.tapago.data.mapper.toDomain
 import com.example.tapago.data.utils.safeDbCall
 import com.example.tapago.domain.model.Sheet
 import com.example.tapago.domain.model.workout.Workout
-import com.example.tapago.domain.model.workout.WorkoutExercise
 import com.example.tapago.domain.repository.ITaPagoRepository
 import com.example.tapago.domain.wrapper.IResourceRoom
 import kotlin.collections.map
@@ -20,7 +21,7 @@ class WorkoutRepositoryImp(
     private var database: AppDatabase,
     private var sheetDao: SheetDao,
     private var exerciseSheetDao: ExerciseSheetDao,
-    private var exerciseDao: ExerciseDao
+    private val setsExerciseDao: SetExerciseSheetDao
 ) : ITaPagoRepository<SheetsEntity> {
 
     suspend fun selectSheet(): IResourceRoom<List<Sheet>> {
@@ -46,7 +47,22 @@ class WorkoutRepositoryImp(
                     )
                 }
 
-                exerciseSheetDao.insertExercisesSheet(sheetBodyList)
+                val idGenerate = exerciseSheetDao.insertExercisesSheet(sheetBodyList)
+
+                val setsExercise = workout.listExercise.zip(idGenerate).flatMap { (exercise, exerciseId) ->
+
+                    (1..exercise.qtdSets).map { numeroDaSerie ->
+
+                        SetsExerciseSheetsEntity(
+                            numSet = numeroDaSerie,
+                            numReps = exercise.listSets.firstOrNull()?.numRep ?: 0,
+                            weight = exercise.listSets.firstOrNull()?.wheght ?: 0.0,
+                            exerciseSheetId = exerciseId.toInt()
+                        )
+                    }
+                }
+
+                setsExerciseDao.insert(setsExercise)
             }
 
             IResourceRoom.Success(Unit)

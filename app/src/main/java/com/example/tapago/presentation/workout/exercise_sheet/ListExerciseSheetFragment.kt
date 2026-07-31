@@ -48,21 +48,6 @@ class ListExerciseSheetFragment : Fragment() {
         }
     }
 
-//    private fun observe() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//
-//                viewModel.uiState.collect { state ->
-//                    state.workout?.let { workout ->
-//                        binding.nameSheetTv.text = workout.nameSheet
-//                        setAdapter.submitList(workout.listExercise)
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
-
     private fun setupRecyclerView(){
         setAdapter = ListExerciseSheetAdapter()
 
