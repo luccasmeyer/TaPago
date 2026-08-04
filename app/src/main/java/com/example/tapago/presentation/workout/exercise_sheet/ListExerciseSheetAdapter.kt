@@ -1,8 +1,10 @@
 package com.example.tapago.presentation.workout.exercise_sheet
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tapago.databinding.LayoutExerciseSheetItemBinding
@@ -20,27 +22,46 @@ class ListExerciseSheetAdapter : ListAdapter<WorkoutExercise, ListExerciseSheetA
     }
 
     override fun onBindViewHolder(holder: WorkoutViewHolder, position: Int) {
-        val currentItem = getItem(position)
-        holder.bind(currentItem)
+        holder.bind(getItem(position))
     }
 
     inner class WorkoutViewHolder(private val binding: LayoutExerciseSheetItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: WorkoutExercise) {
+        private val setsAdapter = SetsAdapter()
 
+        init {
+            binding.infoSetsRv.apply {
+                layoutManager = LinearLayoutManager(binding.root.context)
+                adapter = setsAdapter
+            }
+        }
+
+        fun bind(item: WorkoutExercise) {
             binding.nameExerciseTv.text = item.nameExercise
             binding.groupMuscleTv.text = item.typeExercise
             binding.setsNumberTv.text = "${item.qtdSets} Series"
+
+            setsAdapter.submitSetsCount(item.qtdSets)
+
+            binding.startExerciseBt.setOnClickListener {
+                val isCurrentlyVisible = binding.infoSetsRv.visibility == View.VISIBLE
+
+                if (isCurrentlyVisible) {
+                    binding.infoSetsRv.visibility = View.GONE
+                    binding.startExerciseBt.setIconResource(com.example.tapago.R.drawable.chevron_right_24dp)
+                } else {
+                    binding.infoSetsRv.visibility = View.VISIBLE
+                }
+            }
         }
     }
-    companion object DiffCallback : DiffUtil.ItemCallback<WorkoutExercise>() {
-        override fun areItemsTheSame(oldItem: WorkoutExercise, newItem: WorkoutExercise): Boolean {
-            return oldItem.nameExercise == newItem.nameExercise
-        }
 
-        override fun areContentsTheSame(oldItem: WorkoutExercise, newItem: WorkoutExercise): Boolean {
-            return oldItem == newItem
-        }
+    companion object DiffCallback : DiffUtil.ItemCallback<WorkoutExercise>() {
+        override fun areItemsTheSame(oldItem: WorkoutExercise, newItem: WorkoutExercise) =
+            oldItem.nameExercise == newItem.nameExercise
+
+        override fun areContentsTheSame(oldItem: WorkoutExercise, newItem: WorkoutExercise) =
+            oldItem == newItem
     }
 }

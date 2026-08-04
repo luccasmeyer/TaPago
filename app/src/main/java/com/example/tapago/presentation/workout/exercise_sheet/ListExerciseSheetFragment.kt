@@ -13,14 +13,11 @@ import com.example.tapago.databinding.FragmentListExerciseSheetBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListExerciseSheetFragment : Fragment() {
-
     private var _binding: FragmentListExerciseSheetBinding? = null
     val binding get() = _binding!!
-
     private val viewModel: ListExerciseSheetViewModel by viewModel()
     private val args: ListExerciseSheetFragmentArgs by navArgs()
-
-    private lateinit var setAdapter: ListExerciseSheetAdapter
+    private val listExerciseSheetAdapter by lazy { ListExerciseSheetAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,16 +41,29 @@ class ListExerciseSheetFragment : Fragment() {
     private fun observeViewModel(){
         observe(viewModel.uiState){ state ->
             binding.nameSheetTv.text = state.workout?.nameSheet
-            setAdapter.submitList(state.workout?.listExercise)
+            listExerciseSheetAdapter.submitList(state.workout?.listExercise)
         }
     }
 
-    private fun setupRecyclerView(){
-        setAdapter = ListExerciseSheetAdapter()
+//    private fun observe() {
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//
+//                viewModel.uiState.collect { state ->
+//                    state.workout?.let { workout ->
+//                        binding.nameSheetTv.text = workout.nameSheet
+//                        setAdapter.submitList(workout.listExercise)
+//                    }
+//                }
+//
+//            }
+//        }
+//    }
 
+    private fun setupRecyclerView(){
         binding.listExerciseSheetRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = setAdapter
+            adapter = listExerciseSheetAdapter
         }
     }
 
