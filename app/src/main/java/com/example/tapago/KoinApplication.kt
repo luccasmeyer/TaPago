@@ -15,16 +15,20 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+    //Database
     single { AppDatabase.getDatabase(androidContext()) }
-    single { ProfileRepositoryImp(get()) }
-    single { ExerciseRepositoryImp(get()) }
-    single { WorkoutRepositoryImp(get(), get(), get(), get()) }
     single { get<AppDatabase>().ProfileDao() }
     single { get<AppDatabase>().SheetDao() }
     single { get<AppDatabase>().ExerciseDao() }
     single { get<AppDatabase>().ExerciseSheetDao() }
     single { get<AppDatabase>().SetExerciseSheetDao() }
 
+    //Repository
+    single { ProfileRepositoryImp(get()) }
+    single { ExerciseRepositoryImp(get()) }
+    single { WorkoutRepositoryImp(get(), get(), get(), get()) }
+
+    //Viewmodel
     viewModel { MenuViewModel() }
     viewModel { ProfileViewModel(get()) }
     viewModel { RegisterProfileViewModel(get()) }
