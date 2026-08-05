@@ -5,7 +5,7 @@ import com.example.tapago.domain.model.Profile
 
 fun ProfileEntity.toDomain(): Profile{
     return Profile(
-        name = this.nameProfile,
+        name = this.nameProfile.replaceFirstChar { it.uppercase() }.trim(),
         weight = this.weightProfile,
         height = this.heightProfile
     )

@@ -12,26 +12,31 @@ import kotlinx.coroutines.launch
 
 class ListExerciseSheetViewModel(
     private var repo: WorkoutRepositoryImp
-): ViewModel() {
+) : ViewModel() {
     private var _uiState = MutableStateFlow(ListExerciseSheetState())
     val uiState: StateFlow<ListExerciseSheetState> = _uiState.asStateFlow()
 
-    fun getWorkout(idSheet: Int){
+    fun getWorkout(idSheet: Int) {
         viewModelScope.launch {
             val result = repo.getExerciseSheet(idSheet)
 
-            when(result){
+            when (result) {
                 is IResourceRoom.Success -> {
-                    _uiState.update { it.copy(
-                        isLoanding = false,
-                        workout = result.data
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoanding = false,
+                            workout = result.data
+                        )
+                    }
                 }
+
                 is IResourceRoom.Error -> {
-                    _uiState.update { it.copy(
-                        isLoanding = false,
-                        message = "Erro para consultar o treino ${result.message}"
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoanding = false,
+                            message = "Erro para consultar o treino ${result.message}"
+                        )
+                    }
                 }
             }
         }

@@ -21,5 +21,5 @@ data class SetsExerciseSheetsEntity(
     @ColumnInfo("numSet") val numSet: Int,
     @ColumnInfo("numReps") val numReps: Int,
     @ColumnInfo("weight") val weight: Double,
-    @ColumnInfo("exerciseSheetId") val exervieSheetId: Int
+    @ColumnInfo("exerciseSheetId") val exerciseSheetId: Int
 )

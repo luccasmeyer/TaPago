@@ -49,7 +49,7 @@ interface ExerciseSheetDao {
     suspend fun findAll(): List<ExercisesSheetEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExercisesSheet(sheetBodyList: List<ExercisesSheetEntity>)
+    suspend fun insertExercisesSheet(sheetBodyList: List<ExercisesSheetEntity>): List<Long>
 
     @Transaction
     @Query("SELECT * FROM sheets WHERE sheetId = :itemSheet")

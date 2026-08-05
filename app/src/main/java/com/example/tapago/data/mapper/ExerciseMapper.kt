@@ -5,8 +5,8 @@ import com.example.tapago.domain.model.Exercise
 
 fun ExercisesEntity.toDomain(): Exercise {
     return Exercise(
-        idExerceise = this.exerciseId,
-        nameExercise = this.nameExercise,
+        idExercise = this.exerciseId,
+        nameExercise = this.nameExercise.replaceFirstChar { it.uppercase() }.trim(),
         typeExercise = this.typeExrcise
     )
 }

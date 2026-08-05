@@ -6,7 +6,7 @@ import com.example.tapago.domain.model.Sheet
 fun SheetsEntity.toDomain(): Sheet{
     return Sheet(
         idSheet = this.sheetId,
-        nameSheet = this.nameSheet,
+        nameSheet = this.nameSheet.replaceFirstChar { it.uppercase() }.trim(),
         qtdExercise = this.qtdExercise
     )
 }

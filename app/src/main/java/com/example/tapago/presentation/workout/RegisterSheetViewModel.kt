@@ -1,5 +1,6 @@
 package com.example.tapago.presentation.workout
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tapago.data.repository.ExerciseRepositoryImp
@@ -72,7 +73,7 @@ class RegisterSheetViewModel(
                 qtdSets = 0,
                 listSets = emptyList(),
                 typeExercise = exercise.typeExercise,
-                idExercise = exercise.idExerceise,
+                idExercise = exercise.idExercise,
             )
 
             currentList.add(newExercise)
@@ -114,7 +115,7 @@ class RegisterSheetViewModel(
         val index = currentList.indexOfFirst { it.nameExercise == exercise.nameExercise }
 
         if (index != -1 && exercise.qtdSets > 0){
-            val exerciseUpdate = exercise.copy(qtdSets = exercise.qtdSets-+ 1)
+            val exerciseUpdate = exercise.copy(qtdSets = exercise.qtdSets - 1)
             currentList[index] = exerciseUpdate
 
             _uiState.update { it.copy(
