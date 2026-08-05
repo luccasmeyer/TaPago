@@ -41,7 +41,7 @@ class ListExerciseSheetAdapter :
         }
 
         fun bind(item: WorkoutExercise) {
-            binding.nameExerciseTv.text = item.nameExercise
+            binding.nameExerciseTv.text = item.nameExercise.replaceFirstChar { it.uppercase() }
             binding.groupMuscleTv.text = item.typeExercise
             binding.setsNumberTv.text = "${item.qtdSets} Series"
 

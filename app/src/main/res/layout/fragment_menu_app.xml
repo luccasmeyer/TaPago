@@ -29,22 +29,26 @@
             android:id="@+id/card_info_workout_today_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="12dp">
 
             <TextView
                 android:id="@+id/name_sheet_today_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Superiores"
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/start_sheet_today_mb"
+                style="@style/Widget.Material3.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Iniciar"
+                app:icon="@drawable/chevron_right_24dp"
+                app:iconGravity="textEnd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

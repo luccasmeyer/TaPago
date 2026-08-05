@@ -40,7 +40,7 @@ class ListExerciseSheetFragment : Fragment() {
 
     private fun observeViewModel() {
         observe(viewModel.uiState) { state ->
-            binding.nameSheetTv.text = state.workout?.nameSheet
+            binding.nameSheetTv.text = state.workout?.nameSheet?.replaceFirstChar { it.uppercase() }
             listExerciseSheetAdapter.submitList(state.workout?.listExercise)
         }
     }

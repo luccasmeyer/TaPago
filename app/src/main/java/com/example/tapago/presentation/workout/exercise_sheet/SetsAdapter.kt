@@ -33,7 +33,7 @@ class SetsAdapter : RecyclerView.Adapter<SetsAdapter.SetViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(setNumber: Int) {
-            binding.numberSetTv.text = setNumber.toString()
+            binding.numberSetsTv.text = setNumber.toString()
         }
     }
 }
