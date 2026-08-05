@@ -85,7 +85,7 @@ fun Fragment.showRegisterDialog(
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
     dialog.setContentView(R.layout.dialog_register_profile)
-//    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    dialog.window?.setBackgroundDrawableResource(R.drawable.bg_dialog)
 
     val btnYes = dialog.findViewById<MaterialButton>(R.id.yes_register_dialog)
     val btnNo = dialog.findViewById<MaterialButton>(R.id.not_register_dialog)
@@ -101,6 +101,9 @@ fun Fragment.showRegisterDialog(
     }
 
     dialog.show()
+    val width = (resources.displayMetrics.widthPixels * 0.80).toInt()
+
+    dialog.window?.setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT)
 }
 
 fun Fragment.snackbar(
