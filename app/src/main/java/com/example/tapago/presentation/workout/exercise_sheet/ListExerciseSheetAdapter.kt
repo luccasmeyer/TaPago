@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tapago.R
 import com.example.tapago.databinding.LayoutExerciseSheetItemBinding
 import com.example.tapago.domain.model.workout.WorkoutExercise
+import androidx.core.view.isVisible
 
-class ListExerciseSheetAdapter : ListAdapter<WorkoutExercise, ListExerciseSheetAdapter.WorkoutViewHolder>(DiffCallback) {
+class ListExerciseSheetAdapter :
+    ListAdapter<WorkoutExercise, ListExerciseSheetAdapter.WorkoutViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutViewHolder {
         val binding = LayoutExerciseSheetItemBinding.inflate(
@@ -45,12 +48,13 @@ class ListExerciseSheetAdapter : ListAdapter<WorkoutExercise, ListExerciseSheetA
             setsAdapter.submitSetsCount(item.qtdSets)
 
             binding.startExerciseBt.setOnClickListener {
-                val isCurrentlyVisible = binding.infoSetsRv.visibility == View.VISIBLE
+                val isCurrentlyVisible = binding.infoSetsRv.isVisible
 
                 if (isCurrentlyVisible) {
+                    binding.startExerciseBt.setIconResource(R.drawable.chevron_right_24dp)
                     binding.infoSetsRv.visibility = View.GONE
-                    binding.startExerciseBt.setIconResource(com.example.tapago.R.drawable.chevron_right_24dp)
                 } else {
+                    binding.startExerciseBt.setIconResource(R.drawable.keyboard_arrow_down_24dp)
                     binding.infoSetsRv.visibility = View.VISIBLE
                 }
             }

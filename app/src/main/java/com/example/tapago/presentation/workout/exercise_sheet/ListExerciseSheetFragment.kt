@@ -38,29 +38,14 @@ class ListExerciseSheetFragment : Fragment() {
         observeViewModel()
     }
 
-    private fun observeViewModel(){
-        observe(viewModel.uiState){ state ->
+    private fun observeViewModel() {
+        observe(viewModel.uiState) { state ->
             binding.nameSheetTv.text = state.workout?.nameSheet
             listExerciseSheetAdapter.submitList(state.workout?.listExercise)
         }
     }
 
-//    private fun observe() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//
-//                viewModel.uiState.collect { state ->
-//                    state.workout?.let { workout ->
-//                        binding.nameSheetTv.text = workout.nameSheet
-//                        setAdapter.submitList(workout.listExercise)
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
-
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         binding.listExerciseSheetRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = listExerciseSheetAdapter
