@@ -1,6 +1,5 @@
 package com.example.tapago.data.repository
 
-import android.util.Log
 import androidx.room.withTransaction
 import com.example.tapago.AppDatabase
 import com.example.tapago.data.daos.ExerciseSheetDao
@@ -15,7 +14,6 @@ import com.example.tapago.domain.model.Sheet
 import com.example.tapago.domain.model.workout.Workout
 import com.example.tapago.domain.repository.ITaPagoRepository
 import com.example.tapago.domain.wrapper.IResourceRoom
-import kotlin.collections.map
 
 class WorkoutRepositoryImp(
     private var database: AppDatabase,
@@ -34,7 +32,8 @@ class WorkoutRepositoryImp(
         return try {
             val sheetEntity = SheetsEntity(
                 nameSheet = workout.nameSheet,
-                qtdExercise = workout.listExercise.size
+                qtdExercise = workout.listExercise.size,
+                workoutDay = workout.dayWeek,
             )
 
             database.withTransaction {
@@ -49,18 +48,19 @@ class WorkoutRepositoryImp(
 
                 val idGenerate = exerciseSheetDao.insertExercisesSheet(sheetBodyList)
 
-                val setsExercise = workout.listExercise.zip(idGenerate).flatMap { (exercise, exerciseId) ->
+                val setsExercise =
+                    workout.listExercise.zip(idGenerate).flatMap { (exercise, exerciseId) ->
 
-                    (1..exercise.qtdSets).map { numeroDaSerie ->
+                        (1..exercise.qtdSets).map { numeroDaSerie ->
 
-                        SetsExerciseSheetsEntity(
-                            numSet = numeroDaSerie,
-                            numReps = exercise.listSets.firstOrNull()?.numRep ?: 0,
-                            weight = exercise.listSets.firstOrNull()?.wheght ?: 0.0,
-                            exerciseSheetId = exerciseId.toInt()
-                        )
+                            SetsExerciseSheetsEntity(
+                                numSet = numeroDaSerie,
+                                numReps = exercise.listSets.firstOrNull()?.numRep ?: 0,
+                                weight = exercise.listSets.firstOrNull()?.wheght ?: 0.0,
+                                exerciseSheetId = exerciseId.toInt()
+                            )
+                        }
                     }
-                }
 
                 setsExerciseDao.insert(setsExercise)
             }
