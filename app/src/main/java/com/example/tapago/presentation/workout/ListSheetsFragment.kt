@@ -23,6 +23,9 @@ class ListSheetsFragment : Fragment() {
     private val binding get() = _binding!!
     private val sheetAdapter by lazy {
         SheetAdapter { idSheet ->
+
+            viewModel.beginWorkout(idSheet)
+
             navigateSafe(R.id.actionWorkoutToExerciseSheet, bundleOf(
                 "idSheet" to idSheet
             ))

@@ -88,6 +88,18 @@ class WorkoutRepositoryImp(
         sheetDao.insertSheet(item)
     }
 
+    suspend fun progressWorkout(): IResourceRoom<Boolean> {
+        return safeDbCall {
+            sheetDao.progressWorkout()
+        }
+    }
+
+    suspend fun startWorkout(idSheet: Int): IResourceRoom<Boolean> {
+        return safeDbCall {
+            sheetDao.startWorkout(idSheet)
+        }
+    }
+
     override suspend fun update(
         item: SheetsEntity
     ): IResourceRoom<Unit> = safeDbCall {
