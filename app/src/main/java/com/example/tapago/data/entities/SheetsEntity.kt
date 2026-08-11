@@ -9,6 +9,6 @@ data class SheetsEntity(
     @PrimaryKey(autoGenerate = true) val sheetId: Int = 0,
     @ColumnInfo("nameSheet") val nameSheet: String,
     @ColumnInfo("quantExercise") val qtdExercise: Int,
-    @ColumnInfo("workoutStatus") val workoutStatus: Boolean? = null,
+    @ColumnInfo("workoutStatus") val workoutStatus: Boolean = false,
     @ColumnInfo("workoutDay") val workoutDay: String
 )

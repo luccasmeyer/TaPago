@@ -7,5 +7,6 @@ data class ListSheetsState(
     val isLoanding: Boolean = true,
     val isError: Boolean = false,
     val message: String? = null,
-    val sheets: List<Sheet>? = null
+    val sheets: List<Sheet>? = null,
+    val navigateToSheetId: Int? = null
 )

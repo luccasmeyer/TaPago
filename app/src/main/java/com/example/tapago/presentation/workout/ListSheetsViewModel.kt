@@ -17,6 +17,10 @@ class ListSheetsViewModel(
     private var _uiState = MutableStateFlow(ListSheetsState())
     val uiState: StateFlow<ListSheetsState> = _uiState.asStateFlow()
 
+    fun onNavigationDone() {
+        _uiState.update { it.copy(isError = false, message = null, navigateToSheetId = null) }
+    }
+
     fun getSheet() {
         viewModelScope.launch {
             _uiState.update {
@@ -56,22 +60,39 @@ class ListSheetsViewModel(
                 _uiState.update {
                     it.copy(
                         isError = true,
-                        message = "Você já esta com um treino em andamento"
+                        message = progressWorkout.exception.toString()
                     )
                 }
                 return@launch
             }
 
-            val startWorkout = repo.startWorkout(idSheet)
+            if (progressWorkout is IResourceRoom.Success) {
+                if (progressWorkout.data <= 0 || repo.sheetInProgress == null) {
+                    val startWorkout = repo.startWorkout(idSheet)
 
-            if (startWorkout is IResourceRoom.Error) {
-                _uiState.update {
-                    it.copy(
-                        isError = true,
-                        message = "Erro: ${startWorkout.message}, ${startWorkout.exception}"
-                    )
+                    if (startWorkout is IResourceRoom.Error) {
+                        _uiState.update {
+                            it.copy(
+                                isError = true,
+                                message = "Erro: ${startWorkout.message}, ${startWorkout.exception}"
+                            )
+                        }
+                        return@launch
+                    }
+                    _uiState.update {
+                        it.copy(
+                            navigateToSheetId = idSheet
+                        )
+                    }
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            isError = true,
+                            message = "Você já tem um treino em andamento"
+                        )
+                    }
+                    onNavigationDone()
                 }
-                return@launch
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.tapago.data.repository
 
+import android.util.Log
 import androidx.room.withTransaction
 import com.example.tapago.AppDatabase
 import com.example.tapago.data.daos.ExerciseSheetDao
@@ -19,9 +20,9 @@ class WorkoutRepositoryImp(
     private var database: AppDatabase,
     private var sheetDao: SheetDao,
     private var exerciseSheetDao: ExerciseSheetDao,
-    private val setsExerciseDao: SetExerciseSheetDao
+    private var setsExerciseDao: SetExerciseSheetDao,
+    var sheetInProgress: Sheet? = null
 ) : ITaPagoRepository<SheetsEntity> {
-
     suspend fun selectSheet(): IResourceRoom<List<Sheet>> {
         val sheet = sheetDao.findAll()
 
@@ -78,6 +79,19 @@ class WorkoutRepositoryImp(
         return safeDbCall { result.toDomain() }
     }
 
+    suspend fun getSheetProgress(): IResourceRoom<Unit> {
+        return try {
+            val result = sheetDao.getSheetProgress()
+
+            sheetInProgress = result.toDomain()
+
+            IResourceRoom.Success(Unit)
+
+        } catch (e: Exception) {
+            IResourceRoom.Error(e.message ?: "Erro para consultar treino em progresso")
+        }
+    }
+
     override suspend fun select(): IResourceRoom<List<SheetsEntity>> = safeDbCall {
         sheetDao.findAll()
     }
@@ -88,15 +102,16 @@ class WorkoutRepositoryImp(
         sheetDao.insertSheet(item)
     }
 
-    suspend fun progressWorkout(): IResourceRoom<Boolean> {
+    suspend fun progressWorkout(): IResourceRoom<Int> {
         return safeDbCall {
-            sheetDao.progressWorkout()
+            sheetDao.progressWorkout().size
         }
     }
 
-    suspend fun startWorkout(idSheet: Int): IResourceRoom<Boolean> {
+    suspend fun startWorkout(idSheet: Int): IResourceRoom<Int> {
         return safeDbCall {
             sheetDao.startWorkout(idSheet)
+
         }
     }
 

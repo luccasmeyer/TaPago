@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.tapago.data.entities.SheetsEntity
+import com.example.tapago.domain.model.Sheet
 
 @Dao
 interface SheetDao {
@@ -19,9 +20,12 @@ interface SheetDao {
     @Delete
     suspend fun deleteSheet(sheetsEntity: SheetsEntity)
 
-    @Query("SELECT * FROM sheets WHERE workoutStatus = 0")
-    suspend fun progressWorkout(): Boolean
+    @Query("SELECT * FROM sheets WHERE workoutStatus = 1")
+    suspend fun progressWorkout(): List<SheetsEntity>
 
     @Query("UPDATE sheets SET workoutStatus = 1 where sheetId = :idSheet")
-    suspend fun startWorkout(idSheet: Int): Boolean
+    suspend fun startWorkout(idSheet: Int): Int
+
+    @Query("SELECT * FROM sheets WHERE workoutStatus = 1")
+    suspend fun getSheetProgress(): SheetsEntity
 }
