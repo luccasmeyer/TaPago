@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/time_widget_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="00:00:00"
-        android:textAppearance="@style/TextAppearance.Material3.DisplaySmall" />
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
     <TextView
         android:id="@+id/name_sheet_tv"
@@ -35,17 +34,6 @@
         android:contentDescription="Pausar"
         android:scaleType="fitCenter"
         android:src="@drawable/pause_24dp"
-        app:tint="@color/blue_primary" />
-
-    <ImageButton
-        android:id="@+id/play_widget_bt"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="4dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Tocar"
-        android:scaleType="fitCenter"
-        android:src="@drawable/play_arrow_24dp"
         app:tint="@color/blue_primary" />
 
 </LinearLayout>

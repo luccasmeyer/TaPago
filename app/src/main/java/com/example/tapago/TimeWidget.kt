@@ -7,13 +7,15 @@ import android.widget.RemoteViews
 import com.example.tapago.data.service.AppService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
+import kotlin.getValue
+
 /**
  * Implementation of App Widget functionality.
  * App Widget Configuration implemented in [TimeWidgetConfigureActivity]
  */
 class TimeWidget : AppWidgetProvider(), KoinComponent {
     private val service: AppService by inject()
-
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -28,7 +30,7 @@ class TimeWidget : AppWidgetProvider(), KoinComponent {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         // When the user deletes the widget, delete the preference associated with it.
         for (appWidgetId in appWidgetIds) {
-            deleteTitlePref(context, appWidgetId)
+
         }
     }
 
@@ -47,11 +49,10 @@ internal fun updateAppWidget(
     appWidgetId: Int,
     service: AppService
 ) {
-    val widgetText = loadTitlePref(context, appWidgetId)
+
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.layout_time_widget)
-    views.setTextViewText(R.id.appwidget_text, widgetText)
-
+    views.setTextViewText(R.id.name_sheet_tv, service.getNameSheet())
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }

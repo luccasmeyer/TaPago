@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import com.example.tapago.data.service.AppService
 import com.example.tapago.databinding.TimeWidgetConfigureBinding
 
 /**
@@ -16,7 +15,6 @@ import com.example.tapago.databinding.TimeWidgetConfigureBinding
 class TimeWidgetConfigureActivity : Activity() {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var appWidgetText: EditText
-    private lateinit var service: AppService
     private var onClickListener = View.OnClickListener {
         val context = this@TimeWidgetConfigureActivity
 
@@ -26,7 +24,7 @@ class TimeWidgetConfigureActivity : Activity() {
 
         // It is the responsibility of the configuration activity to update the app widget
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        updateAppWidget(context, appWidgetManager, appWidgetId, service)
+//        updateAppWidget(context, appWidgetManager, appWidgetId)
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
