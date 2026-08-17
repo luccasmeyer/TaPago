@@ -29,10 +29,10 @@ import com.example.tapago.data.entities.WorkoutCompleteEntity
         ProfileEntity::class,
         WorkoutCompleteEntity::class
     ],
-    version = 5,
+    version = 7,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 4, to = 5)
+        AutoMigration(from = 6, to = 7)
     ]
 )
 @TypeConverters(Converters::class)

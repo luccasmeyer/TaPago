@@ -1,6 +1,5 @@
 package com.example.tapago.data.repository
 
-import android.util.Log
 import androidx.room.withTransaction
 import com.example.tapago.AppDatabase
 import com.example.tapago.data.daos.ExerciseSheetDao
@@ -15,6 +14,9 @@ import com.example.tapago.domain.model.Sheet
 import com.example.tapago.domain.model.workout.Workout
 import com.example.tapago.domain.repository.ITaPagoRepository
 import com.example.tapago.domain.wrapper.IResourceRoom
+
+private const val ONE_MINUTE = 60_000L
+private const val ONE_HOUR = ONE_MINUTE * 60
 
 class WorkoutRepositoryImp(
     private var database: AppDatabase,
@@ -111,7 +113,6 @@ class WorkoutRepositoryImp(
     suspend fun startWorkout(idSheet: Int): IResourceRoom<Int> {
         return safeDbCall {
             sheetDao.startWorkout(idSheet)
-
         }
     }
 
