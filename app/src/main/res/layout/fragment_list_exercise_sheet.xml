@@ -53,4 +53,13 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/finish_workout_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finalizar Treino"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
