@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tapago.R
 import com.example.tapago.common.navigateSafe
+import com.example.tapago.common.observe
 import com.example.tapago.common.snackbar
 import com.example.tapago.databinding.FragmentListSheetWorkoutBinding
 import kotlinx.coroutines.launch
@@ -23,9 +24,7 @@ class ListSheetsFragment : Fragment() {
     private val binding get() = _binding!!
     private val sheetAdapter by lazy {
         SheetAdapter { idSheet ->
-            navigateSafe(R.id.actionWorkoutToExerciseSheet, bundleOf(
-                "idSheet" to idSheet
-            ))
+            viewModel.beginWorkout(idSheet)
         }
     }
 
@@ -43,15 +42,36 @@ class ListSheetsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getSheet()
         setupRecyclerView()
         observeViewModel()
         navigateNewSheet()
-        viewModel.getSheet()
 
         setFragmentResultListener("register_sheet") { _, bundle ->
             val message = bundle.getString("message")
-            if(message != null){
+            if (message != null) {
                 snackbar(message)
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        observe(viewModel.uiState) { state ->
+            state.sheets?.let { listSheets ->
+                sheetAdapter.submitList(listSheets)
+            }
+
+            if (state.isError) {
+                snackbar(state.message!!)
+            }
+
+            state.navigateToSheetId?.let { idSheet ->
+                navigateSafe(
+                    R.id.actionWorkoutToExerciseSheet, bundleOf(
+                        "idSheet" to idSheet
+                    )
+                )
+                viewModel.onNavigationDone()
             }
         }
     }
@@ -60,18 +80,6 @@ class ListSheetsFragment : Fragment() {
         binding.listSheetWorkoutRv.apply {
             adapter = sheetAdapter
             layoutManager = LinearLayoutManager(requireContext())
-        }
-    }
-
-    private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    state.sheets?.let { listSheets ->
-                        sheetAdapter.submitList(listSheets)
-                    }
-                }
-            }
         }
     }
 

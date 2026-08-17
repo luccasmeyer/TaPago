@@ -7,17 +7,18 @@ import com.example.tapago.domain.model.workout.Workout
 import com.example.tapago.domain.model.workout.WorkoutExercise
 import com.example.tapago.domain.model.workout.WorkoutSet
 
-fun SheetComplete.toDomain(): Workout{
+fun SheetComplete.toDomain(): Workout {
     return Workout(
         nameSheet = this.sheet.nameSheet.trim(),
-        qtdExercise = this.exercises.size,
         listExercise = this.exercises.map { exerciseSheetComplete ->
             exerciseSheetComplete.toDomain()
-        }
+        },
+        qtdExercise = this.exercises.size,
+        dayWeek = this.sheet.workoutDay,
     )
 }
 
-fun ExerciseSheetDao.ExerciseSheetComplete.toDomain(): WorkoutExercise{
+fun ExerciseSheetDao.ExerciseSheetComplete.toDomain(): WorkoutExercise {
     return WorkoutExercise(
         idExercise = this.exercise.exerciseId,
         nameExercise = this.exercise.nameExercise.trim(),
@@ -29,9 +30,9 @@ fun ExerciseSheetDao.ExerciseSheetComplete.toDomain(): WorkoutExercise{
     )
 }
 
-fun SetsExerciseSheetsEntity.toDomain(): WorkoutSet{
+fun SetsExerciseSheetsEntity.toDomain(): WorkoutSet {
     return WorkoutSet(
-        numSet = this.numSet, // preciso corrigir isso depois
+        numSet = this.numSet,
         numRep = this.numReps,
         wheght = this.weight
     )

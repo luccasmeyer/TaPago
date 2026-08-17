@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tapago.R
+import com.example.tapago.common.convertDayWeekCompleted
 import com.example.tapago.common.navigateSafe
 import com.example.tapago.common.observe
 import com.example.tapago.common.popBackStackSafe
@@ -30,11 +31,13 @@ class RegisterSheetFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: RegisterSheetViewModel by viewModel()
     private lateinit var searchAdapter: ArrayAdapter<String>
-    private val addedExercisesAdapter by lazy { AddedExerciseAdapter(
-        onRemoveClick = { exercise -> viewModel.removeExerciseToSheet(exercise) },
-        onIncrementSet = { exercise -> viewModel.incrementSet(exercise) },
-        onDecrementSet = { exercise -> viewModel.decrementSet(exercise) },
-    ) }
+    private val addedExercisesAdapter by lazy {
+        AddedExerciseAdapter(
+            onRemoveClick = { exercise -> viewModel.removeExerciseToSheet(exercise) },
+            onIncrementSet = { exercise -> viewModel.incrementSet(exercise) },
+            onDecrementSet = { exercise -> viewModel.decrementSet(exercise) },
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,8 +68,8 @@ class RegisterSheetFragment : Fragment() {
             }
         }
 
-        observe(viewModel.uiState){ state ->
-            if (state.isError == false){
+        observe(viewModel.uiState) { state ->
+            if (state.isError == false) {
                 setFragmentResult(
                     "register_sheet",
                     bundleOf("message" to "Ficha criada com sucesso")
@@ -95,20 +98,37 @@ class RegisterSheetFragment : Fragment() {
     private fun createSheet() {
         binding.saveSheetBtn.setOnClickListener {
 
-            if (binding.nameSheetEt.text!!.isEmpty()) {
+            if (binding.nameSheetEt.text.isNullOrEmpty()) {
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Aviso")
                     .setMessage("Preencha o nome da ficha")
-                    .setPositiveButton("OK", null).show()
+                    .setPositiveButton("OK", null)
+                    .show()
                 return@setOnClickListener
             }
+
+            val checkedId = binding.daysWeekRb.checkedRadioButtonId
+
+            if (checkedId == -1) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Aviso")
+                    .setMessage("Selecione um dia da semana")
+                    .setPositiveButton("OK", null)
+                    .show()
+                return@setOnClickListener
+            }
+
+            val selectedButton = binding.daysWeekRb.findViewById<View>(checkedId)
+            val index = binding.daysWeekRb.indexOfChild(selectedButton)
+            val daySelected = convertDayWeekCompleted(index)
 
             val currentExercises = viewModel.uiState.value.addedExercises
 
             val workout = Workout(
                 nameSheet = binding.nameSheetEt.text.toString(),
                 qtdExercise = currentExercises.size,
-                listExercise = currentExercises
+                listExercise = currentExercises,
+                dayWeek = daySelected ?: ""
             )
 
             viewModel.createSheet(workout)

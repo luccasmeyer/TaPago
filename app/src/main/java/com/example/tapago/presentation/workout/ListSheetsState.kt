@@ -5,5 +5,8 @@ import com.example.tapago.domain.model.Sheet
 data class ListSheetsState(
 
     val isLoanding: Boolean = true,
-    val sheets: List<Sheet>? = null
+    val isError: Boolean = false,
+    val message: String? = null,
+    val sheets: List<Sheet>? = null,
+    val navigateToSheetId: Int? = null
 )

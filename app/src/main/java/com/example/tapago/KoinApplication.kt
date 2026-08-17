@@ -3,6 +3,7 @@ package com.example.tapago
 import com.example.tapago.data.repository.ExerciseRepositoryImp
 import com.example.tapago.data.repository.ProfileRepositoryImp
 import com.example.tapago.data.repository.WorkoutRepositoryImp
+import com.example.tapago.domain.model.Sheet
 import com.example.tapago.presentation.menu.MenuViewModel
 import com.example.tapago.presentation.profile.ProfileViewModel
 import com.example.tapago.presentation.profile.RegisterProfileViewModel
@@ -36,4 +37,5 @@ val appModule = module {
     viewModel { RegisterSheetViewModel(get(), get()) }
     viewModel { RegisterExerciseViewModel(get()) }
     viewModel { ListExerciseSheetViewModel(get()) }
+    viewModel { MainViewModel(get()) }
 }

@@ -1,6 +1,5 @@
 package com.example.tapago.data.repository
 
-import android.util.Log
 import androidx.room.withTransaction
 import com.example.tapago.AppDatabase
 import com.example.tapago.data.daos.ExerciseSheetDao
@@ -15,15 +14,17 @@ import com.example.tapago.domain.model.Sheet
 import com.example.tapago.domain.model.workout.Workout
 import com.example.tapago.domain.repository.ITaPagoRepository
 import com.example.tapago.domain.wrapper.IResourceRoom
-import kotlin.collections.map
+
+private const val ONE_MINUTE = 60_000L
+private const val ONE_HOUR = ONE_MINUTE * 60
 
 class WorkoutRepositoryImp(
     private var database: AppDatabase,
     private var sheetDao: SheetDao,
     private var exerciseSheetDao: ExerciseSheetDao,
-    private val setsExerciseDao: SetExerciseSheetDao
+    private var setsExerciseDao: SetExerciseSheetDao,
+    var sheetInProgress: Sheet? = null
 ) : ITaPagoRepository<SheetsEntity> {
-
     suspend fun selectSheet(): IResourceRoom<List<Sheet>> {
         val sheet = sheetDao.findAll()
 
@@ -34,7 +35,8 @@ class WorkoutRepositoryImp(
         return try {
             val sheetEntity = SheetsEntity(
                 nameSheet = workout.nameSheet,
-                qtdExercise = workout.listExercise.size
+                qtdExercise = workout.listExercise.size,
+                workoutDay = workout.dayWeek,
             )
 
             database.withTransaction {
@@ -49,18 +51,19 @@ class WorkoutRepositoryImp(
 
                 val idGenerate = exerciseSheetDao.insertExercisesSheet(sheetBodyList)
 
-                val setsExercise = workout.listExercise.zip(idGenerate).flatMap { (exercise, exerciseId) ->
+                val setsExercise =
+                    workout.listExercise.zip(idGenerate).flatMap { (exercise, exerciseId) ->
 
-                    (1..exercise.qtdSets).map { numeroDaSerie ->
+                        (1..exercise.qtdSets).map { numeroDaSerie ->
 
-                        SetsExerciseSheetsEntity(
-                            numSet = numeroDaSerie,
-                            numReps = exercise.listSets.firstOrNull()?.numRep ?: 0,
-                            weight = exercise.listSets.firstOrNull()?.wheght ?: 0.0,
-                            exerciseSheetId = exerciseId.toInt()
-                        )
+                            SetsExerciseSheetsEntity(
+                                numSet = numeroDaSerie,
+                                numReps = exercise.listSets.firstOrNull()?.numRep ?: 0,
+                                weight = exercise.listSets.firstOrNull()?.wheght ?: 0.0,
+                                exerciseSheetId = exerciseId.toInt()
+                            )
+                        }
                     }
-                }
 
                 setsExerciseDao.insert(setsExercise)
             }
@@ -78,6 +81,19 @@ class WorkoutRepositoryImp(
         return safeDbCall { result.toDomain() }
     }
 
+    suspend fun getSheetProgress(): IResourceRoom<Unit> {
+        return try {
+            val result = sheetDao.getSheetProgress()
+
+            sheetInProgress = result.toDomain()
+
+            IResourceRoom.Success(Unit)
+
+        } catch (e: Exception) {
+            IResourceRoom.Error(e.message ?: "Erro para consultar treino em progresso")
+        }
+    }
+
     override suspend fun select(): IResourceRoom<List<SheetsEntity>> = safeDbCall {
         sheetDao.findAll()
     }
@@ -86,6 +102,24 @@ class WorkoutRepositoryImp(
         item: SheetsEntity
     ): IResourceRoom<Unit> = safeDbCall {
         sheetDao.insertSheet(item)
+    }
+
+    suspend fun progressWorkout(): IResourceRoom<Int> {
+        return safeDbCall {
+            sheetDao.progressWorkout().size
+        }
+    }
+
+    suspend fun startWorkout(idSheet: Int): IResourceRoom<Int> {
+        return safeDbCall {
+            sheetDao.startWorkout(idSheet)
+        }
+    }
+
+    suspend fun finishWorkout(idSheet: Int): IResourceRoom<Int>{
+        return safeDbCall {
+            sheetDao.finishWokrout(idSheet)
+        }
     }
 
     override suspend fun update(
