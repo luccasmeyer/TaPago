@@ -26,6 +26,9 @@ interface SheetDao {
     @Query("UPDATE sheets SET workoutStatus = 1, start_time = strftime('%s', 'now') where sheetId = :idSheet")
     suspend fun startWorkout(idSheet: Int): Int
 
+    @Query("UPDATE sheets SET workoutStatus = 0, finish_time = strftime('%s', 'now') where sheetId = :idSheet")
+    suspend fun finishWokrout(idSheet: Int): Int
+
     @Query("SELECT * FROM sheets WHERE workoutStatus = 1")
     suspend fun getSheetProgress(): SheetsEntity
 }

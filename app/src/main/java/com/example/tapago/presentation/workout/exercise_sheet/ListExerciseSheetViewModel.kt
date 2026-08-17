@@ -18,9 +18,7 @@ class ListExerciseSheetViewModel(
 
     fun getWorkout(idSheet: Int) {
         viewModelScope.launch {
-            val result = repo.getExerciseSheet(idSheet)
-
-            when (result) {
+            when (val result = repo.getExerciseSheet(idSheet)) {
                 is IResourceRoom.Success -> {
                     _uiState.update {
                         it.copy(
@@ -39,6 +37,20 @@ class ListExerciseSheetViewModel(
                     }
                 }
             }
+        }
+    }
+
+    fun finishWorkout(idSheet: Int) {
+        viewModelScope.launch {
+            repo.finishWorkout(idSheet)
+
+//            if (result is IResourceRoom.Error){
+//                _uiState.update { it.copy(
+//                    isError = true,
+//                    message = result.message
+//                ) }
+//            }
+
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.tapago.presentation.workout.exercise_sheet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tapago.common.observe
 import com.example.tapago.common.popBackStackSafe
+import com.example.tapago.common.snackbar
 import com.example.tapago.databinding.FragmentListExerciseSheetBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,6 +38,7 @@ class ListExerciseSheetFragment : Fragment() {
         viewModel.getWorkout(args.idSheet)
 
         observeViewModel()
+        finalizaTreino()
     }
 
     private fun observeViewModel() {
@@ -49,6 +52,12 @@ class ListExerciseSheetFragment : Fragment() {
         binding.listExerciseSheetRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = listExerciseSheetAdapter
+        }
+    }
+
+    private fun finalizaTreino(){
+        binding.finishWorkoutBt.setOnClickListener {
+            viewModel.finishWorkout(args.idSheet)
         }
     }
 

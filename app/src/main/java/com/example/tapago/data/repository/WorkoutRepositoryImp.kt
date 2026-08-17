@@ -116,6 +116,12 @@ class WorkoutRepositoryImp(
         }
     }
 
+    suspend fun finishWorkout(idSheet: Int): IResourceRoom<Int>{
+        return safeDbCall {
+            sheetDao.finishWokrout(idSheet)
+        }
+    }
+
     override suspend fun update(
         item: SheetsEntity
     ): IResourceRoom<Unit> = safeDbCall {
