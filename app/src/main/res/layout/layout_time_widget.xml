@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/time_widget_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/timer_tv"
@@ -11,57 +15,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="00:00:00"
-        android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
     <TextView
         android:id="@+id/name_sheet_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timer_tv"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Superiores" />
+        android:text="Superiores"
+        android:textStyle="bold" />
 
-    <com.google.android.material.button.MaterialButton
+    <ImageButton
         android:id="@+id/pause_widget_bt"
-        style="@style/Widget.Material3.Button.TextButton.Icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_marginStart="24dp"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="0dp"
-        app:icon="@drawable/pause_24dp"
-        app:iconSize="42dp"
-        app:iconTint="@color/blue_primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/name_sheet_tv"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Pausar"
+        android:scaleType="fitCenter"
+        android:src="@drawable/pause_24dp"
+        app:tint="@color/blue_primary" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/play_widget_bt"
-        style="@style/Widget.Material3.Button.TextButton.Icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="0dp"
-        app:icon="@drawable/play_arrow_24dp"
-        app:iconSize="42dp"
-        app:iconTint="@color/blue_primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pause_widget_bt"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
