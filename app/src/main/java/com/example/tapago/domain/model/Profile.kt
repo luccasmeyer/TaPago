@@ -4,5 +4,6 @@ data class Profile(
 
     val name: String,
     val weight: Double,
-    val height: Double
+    val height: Double,
+    val goal: String
 )

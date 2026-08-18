@@ -7,6 +7,7 @@ fun ProfileEntity.toDomain(): Profile{
     return Profile(
         name = this.nameProfile.replaceFirstChar { it.uppercase() }.trim(),
         weight = this.weightProfile,
-        height = this.heightProfile
+        height = this.heightProfile,
+        goal = this.goal ?: "",
     )
 }

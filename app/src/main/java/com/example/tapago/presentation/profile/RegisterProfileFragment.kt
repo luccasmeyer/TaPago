@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.tapago.R
+import com.example.tapago.common.convertDayWeekCompleted
 import com.example.tapago.common.convertForDouble
+import com.example.tapago.common.getGoalProfile
+import com.example.tapago.common.hideKeyboard
 import com.example.tapago.common.navigateSafe
+import com.example.tapago.common.observe
 import com.example.tapago.common.popBackStackSafe
 import com.example.tapago.data.entities.ProfileEntity
 import com.example.tapago.databinding.FragmentRegisterProfileBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RegisterProfileFragment: Fragment() {
+class RegisterProfileFragment : Fragment() {
 
     private var _binding: FragmentRegisterProfileBinding? = null
     private val binding get() = _binding!!
@@ -31,11 +35,19 @@ class RegisterProfileFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.topBarMt.setOnClickListener { popBackStackSafe() }
+
+        binding.nameProfileEt.setOnFocusChangeListener { view, hasFocused ->
+            if (hasFocused) {
+                hideKeyboard(view)
+            }
+        }
 
         registerProfile()
 
         binding.weightPlusBt.setOnClickListener {
+            hideKeyboard(view)
             val currentWeight = convertForDouble(binding.weightEt.text.toString())
             val newWeight = currentWeight + 0.5
 
@@ -47,6 +59,7 @@ class RegisterProfileFragment: Fragment() {
         }
 
         binding.weightLessBt.setOnClickListener {
+            hideKeyboard(view)
             val currentWeight = convertForDouble(binding.weightEt.text.toString())
             val newWeight = currentWeight - 0.5
 
@@ -58,6 +71,7 @@ class RegisterProfileFragment: Fragment() {
         }
 
         binding.heightPlusBt.setOnClickListener {
+            hideKeyboard(view)
             val currentHeighr = convertForDouble(binding.heightEt.text.toString())
             val newHeighr = currentHeighr + 0.5
 
@@ -69,6 +83,7 @@ class RegisterProfileFragment: Fragment() {
         }
 
         binding.heightLessBt.setOnClickListener {
+            hideKeyboard(view)
             val currentHeighr = convertForDouble(binding.heightEt.text.toString())
             val newHeighr = currentHeighr - 0.5
 
@@ -89,14 +104,17 @@ class RegisterProfileFragment: Fragment() {
             val weight = weightText.toDoubleOrNull() ?: 0.0
             val height = heightText.toDoubleOrNull() ?: 0.0
 
+            val checkedId = binding.goalRg.checkedRadioButtonId
+
             when {
-                nameText.isBlank() && weight == 0.0 && height == 0.0 -> {
+                nameText.isBlank() && weight == 0.0 && height == 0.0 && checkedId == -1 -> {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Aviso")
                         .setMessage("Você precisa preencher as informações")
                         .setPositiveButton("OK", null).show()
                     return@setOnClickListener
                 }
+
                 nameText.isBlank() -> {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Aviso")
@@ -104,6 +122,7 @@ class RegisterProfileFragment: Fragment() {
                         .setPositiveButton("OK", null).show()
                     return@setOnClickListener
                 }
+
                 weight == 0.0 -> {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Aviso")
@@ -111,6 +130,7 @@ class RegisterProfileFragment: Fragment() {
                         .setPositiveButton("OK", null).show()
                     return@setOnClickListener
                 }
+
                 height == 0.0 -> {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Aviso")
@@ -118,12 +138,27 @@ class RegisterProfileFragment: Fragment() {
                         .setPositiveButton("OK", null).show()
                     return@setOnClickListener
                 }
+
+
+            }
+
+            val selectedButton = binding.goalRg.findViewById<View>(checkedId)
+            val index = binding.goalRg.indexOfChild(selectedButton)
+            val goalSelected = getGoalProfile(index)
+
+            if (goalSelected == "") {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Aviso")
+                    .setMessage("Você precisa preencher seu objetivo")
+                    .setPositiveButton("OK", null).show()
+                return@setOnClickListener
             }
 
             val profileEntity = ProfileEntity(
                 nameProfile = nameText,
                 weightProfile = weight,
-                heightProfile = height
+                heightProfile = height,
+                goal = goalSelected,
             )
 
             viewModel.postProfile(profileEntity)
