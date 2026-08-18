@@ -10,5 +10,6 @@ data class ProfileEntity(
     @PrimaryKey(autoGenerate = true) val profileId: Int = 0,
     @ColumnInfo("nameProfile") val nameProfile: String,
     @ColumnInfo("weight") val weightProfile: Double,
-    @ColumnInfo("height") val heightProfile: Double
+    @ColumnInfo("height") val heightProfile: Double,
+    @ColumnInfo("goal") val goal: String? = null
 )
