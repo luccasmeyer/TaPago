@@ -1,6 +1,7 @@
 package com.example.tapago.presentation.workout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +64,7 @@ class ListSheetsFragment : Fragment() {
 
             if (state.isError) {
                 snackbar(state.message!!)
+                Log.e("Erro para navegar", "${state.message}")
             }
 
             state.navigateToSheetId?.let { idSheet ->
