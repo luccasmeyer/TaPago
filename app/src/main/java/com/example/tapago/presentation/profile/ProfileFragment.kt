@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.tapago.R
 import androidx.fragment.app.Fragment
+import com.example.tapago.common.Goal
 import com.example.tapago.common.navigateSafe
 import com.example.tapago.common.observe
 import com.example.tapago.common.popBackStackSafe
@@ -45,6 +46,7 @@ class ProfileFragment : Fragment() {
                 binding.nameProfileTv.text = profile.name
                 binding.weightInfoTv.text = profile.weight.toString()
                 binding.heightInfoTv.text = profile.height.toString()
+                binding.goalInfoTv.text = Goal.getTextGoal(profile.goal)
             }
         }
     }

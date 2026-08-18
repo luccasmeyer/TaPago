@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/mario_perfil" />
+        app:srcCompat="@drawable/mario_perfil" />
 
     <TextView
         android:id="@+id/name_profile_tv"
