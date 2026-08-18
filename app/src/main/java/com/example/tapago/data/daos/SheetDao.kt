@@ -31,4 +31,7 @@ interface SheetDao {
 
     @Query("SELECT * FROM sheets WHERE workoutStatus = 1")
     suspend fun getSheetProgress(): SheetsEntity
+
+    @Query("SELECT * FROM sheets WHERE workoutDay = :dayWeek")
+    suspend fun getSheetDay(dayWeek: String): SheetsEntity?
 }

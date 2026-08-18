@@ -116,9 +116,15 @@ class WorkoutRepositoryImp(
         }
     }
 
-    suspend fun finishWorkout(idSheet: Int): IResourceRoom<Int>{
+    suspend fun finishWorkout(idSheet: Int): IResourceRoom<Int> {
         return safeDbCall {
             sheetDao.finishWokrout(idSheet)
+        }
+    }
+
+    suspend fun getWorkoutDay(currentDay: String): IResourceRoom<Sheet?> {
+        return safeDbCall {
+            sheetDao.getSheetDay(currentDay)?.toDomain()
         }
     }
 
