@@ -102,7 +102,9 @@ class WorkoutRepositoryImp(
 
     suspend fun progressWorkout(): IResourceRoom<Sheet?> {
         return safeDbCall {
-            sheetDao.progressWorkout()?.toDomain()
+            sheetDao.progressWorkout()?.toDomain().also { sheet ->
+                sheetInProgress = sheet
+            }
         }
     }
 
@@ -126,6 +128,7 @@ class WorkoutRepositoryImp(
 
     suspend fun finishWorkout(idSheet: Int): IResourceRoom<Int> {
         return safeDbCall {
+            sheetInProgress = null
             sheetDao.finishWokrout(idSheet)
         }
     }

@@ -64,7 +64,6 @@ class ListSheetsFragment : Fragment() {
 
             if (state.isError) {
                 snackbar(state.message!!)
-                Log.e("Erro para navegar", "${state.message}")
             }
 
             state.navigateToSheetId?.let { idSheet ->
