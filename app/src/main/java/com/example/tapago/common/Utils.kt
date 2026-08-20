@@ -11,13 +11,13 @@ fun convertForDouble(string: String): Double {
 
 fun convertDayWeekCompleted(item: Int): String? {
     val listDayOf = mapOf(
-        0 to "sunday",
-        1 to "monday",
-        2 to "tuesday",
-        3 to "wednesday",
-        4 to "thursday",
-        5 to "friday",
-        6 to "saturday"
+        0 to "monday",
+        1 to "tuesday",
+        2 to "wednesday",
+        3 to "thursday",
+        4 to "friday",
+        5 to "saturday",
+        6 to "sunday"
     )
 
     return listDayOf[item]
