@@ -35,7 +35,7 @@ val appModule = module {
     single { AppService(get()) }
 
     //Viewmodel
-    viewModel { MenuViewModel() }
+    viewModel { MenuViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { RegisterProfileViewModel(get()) }
     viewModel { ListSheetsViewModel(get()) }

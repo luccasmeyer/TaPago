@@ -23,8 +23,14 @@ class WorkoutRepositoryImp(
     private var sheetDao: SheetDao,
     private var exerciseSheetDao: ExerciseSheetDao,
     private var setsExerciseDao: SetExerciseSheetDao,
+
     var sheetInProgress: Sheet? = null
 ) : ITaPagoRepository<SheetsEntity> {
+
+    override suspend fun select(): IResourceRoom<List<SheetsEntity>> = safeDbCall {
+        sheetDao.findAll()
+    }
+
     suspend fun selectSheet(): IResourceRoom<List<Sheet>> {
         val sheet = sheetDao.findAll()
 
@@ -94,19 +100,11 @@ class WorkoutRepositoryImp(
         }
     }
 
-    override suspend fun select(): IResourceRoom<List<SheetsEntity>> = safeDbCall {
-        sheetDao.findAll()
-    }
-
-    override suspend fun insert(
-        item: SheetsEntity
-    ): IResourceRoom<Unit> = safeDbCall {
-        sheetDao.insertSheet(item)
-    }
-
-    suspend fun progressWorkout(): IResourceRoom<Int> {
+    suspend fun progressWorkout(): IResourceRoom<Sheet?> {
         return safeDbCall {
-            sheetDao.progressWorkout().size
+            sheetDao.progressWorkout()?.toDomain().also { sheet ->
+                sheetInProgress = sheet
+            }
         }
     }
 
@@ -116,8 +114,21 @@ class WorkoutRepositoryImp(
         }
     }
 
-    suspend fun finishWorkout(idSheet: Int): IResourceRoom<Int>{
+    suspend fun getWorkoutDay(currentDay: String): IResourceRoom<Sheet?> {
         return safeDbCall {
+            sheetDao.getSheetDay(currentDay)?.toDomain()
+        }
+    }
+
+    override suspend fun insert(
+        item: SheetsEntity
+    ): IResourceRoom<Unit> = safeDbCall {
+        sheetDao.insertSheet(item)
+    }
+
+    suspend fun finishWorkout(idSheet: Int): IResourceRoom<Int> {
+        return safeDbCall {
+            sheetInProgress = null
             sheetDao.finishWokrout(idSheet)
         }
     }

@@ -1,5 +1,6 @@
 package com.example.tapago.presentation.workout
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tapago.data.repository.WorkoutRepositoryImp
@@ -18,7 +19,14 @@ class ListSheetsViewModel(
     val uiState: StateFlow<ListSheetsState> = _uiState.asStateFlow()
 
     fun onNavigationDone() {
-        _uiState.update { it.copy(isError = false, message = null, navigateToSheetId = null) }
+        _uiState.update {
+            it.copy(
+                isError = false,
+                message = null,
+                navigateToSheetId = null,
+                sheets = null
+            )
+        }
     }
 
     fun getSheet() {
@@ -67,7 +75,10 @@ class ListSheetsViewModel(
             }
 
             if (progressWorkout is IResourceRoom.Success) {
-                if (progressWorkout.data <= 0 || repo.sheetInProgress == null) {
+
+                val currentWorkout = progressWorkout.data?.idSheet
+
+                if (progressWorkout.data?.workoutStatus == false || repo.sheetInProgress == null) {
                     val startWorkout = repo.startWorkout(idSheet)
 
                     if (startWorkout is IResourceRoom.Error) {
@@ -79,6 +90,12 @@ class ListSheetsViewModel(
                         }
                         return@launch
                     }
+                    _uiState.update {
+                        it.copy(
+                            navigateToSheetId = idSheet
+                        )
+                    }
+                } else if (currentWorkout == idSheet) {
                     _uiState.update {
                         it.copy(
                             navigateToSheetId = idSheet

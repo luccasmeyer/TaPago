@@ -21,7 +21,7 @@ interface SheetDao {
     suspend fun deleteSheet(sheetsEntity: SheetsEntity)
 
     @Query("SELECT * FROM sheets WHERE workoutStatus = 1")
-    suspend fun progressWorkout(): List<SheetsEntity>
+    suspend fun progressWorkout(): SheetsEntity?
 
     @Query("UPDATE sheets SET workoutStatus = 1, start_time = strftime('%s', 'now') where sheetId = :idSheet")
     suspend fun startWorkout(idSheet: Int): Int
@@ -31,4 +31,7 @@ interface SheetDao {
 
     @Query("SELECT * FROM sheets WHERE workoutStatus = 1")
     suspend fun getSheetProgress(): SheetsEntity
+
+    @Query("SELECT * FROM sheets WHERE workoutDay = :dayWeek")
+    suspend fun getSheetDay(dayWeek: String): SheetsEntity?
 }

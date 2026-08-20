@@ -7,7 +7,13 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.tapago.presentation.menu.MenuFragment"
-        android:label="MenuFragment" />
+        android:label="MenuFragment">
+
+        <action
+            android:id="@+id/actionMenuToWorkout"
+            app:destination="@+id/sheet_exercise_graph"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
