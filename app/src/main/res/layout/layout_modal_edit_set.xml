@@ -29,8 +29,8 @@
             android:layout_height="48dp"
             app:icon="@drawable/add_24dp" />
 
-        <EditText
-            android:id="@+id/weight_et"
+        <TextView
+            android:id="@+id/weight_tv"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -62,8 +62,8 @@
             android:layout_height="48dp"
             app:icon="@drawable/add_24dp" />
 
-        <EditText
-            android:id="@+id/height_et"
+        <TextView
+            android:id="@+id/rep_tv"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
