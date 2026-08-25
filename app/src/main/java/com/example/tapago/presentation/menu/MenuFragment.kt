@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.tapago.MainActivity
 import com.example.tapago.R
@@ -45,15 +46,23 @@ class MenuFragment : Fragment() {
                 snackbar(state.message.toString())
             }
 
-            binding.nameSheetTodayTv.text = state.sheetDay?.nameSheet
+            if (state.sheetDay == null) {
+                binding.cardSheetWorkoutTodayCv.isVisible = false
+                binding.withoutWorkout.isVisible = true
+            } else {
+                binding.cardSheetWorkoutTodayCv.isVisible = true
+                binding.nameSheetTodayTv.text = state.sheetDay.nameSheet
+            }
         }
     }
 
-    private fun navigateWorkout(){
+    private fun navigateWorkout() {
         binding.startSheetTodayBt.setOnClickListener {
-            navigateSafe(R.id.actionMenuToWorkout, bundleOf(
-                "idSheet" to viewModel.uiState.value.sheetDay?.idSheet
-            ))
+            navigateSafe(
+                R.id.actionMenuToWorkout, bundleOf(
+                    "idSheet" to viewModel.uiState.value.sheetDay?.idSheet
+                )
+            )
         }
     }
 
