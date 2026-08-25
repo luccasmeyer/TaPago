@@ -15,6 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/without_workout"
+        style="@style/TextAppearance.Material3.TitleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Você não tem treino hoje"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/text_menu_app_tv"
+        app:layout_constraintTop_toBottomOf="@+id/text_menu_app_tv" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_sheet_workout_today_cv"
         android:layout_width="0dp"
@@ -49,11 +60,30 @@
                 android:text="Iniciar"
                 app:icon="@drawable/chevron_right_24dp"
                 app:iconGravity="textEnd"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/text_history_workout_tv"
+        style="@style/TextAppearance.Material3.TitleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Histórico da sua semana"
+        app:layout_constraintStart_toStartOf="@+id/text_menu_app_tv"
+        app:layout_constraintTop_toBottomOf="@+id/card_sheet_workout_today_cv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="AQUI VAI TER O HISTÓRICO DE TREINOS"
+        app:layout_constraintStart_toStartOf="@+id/text_menu_app_tv"
+        app:layout_constraintTop_toBottomOf="@+id/text_history_workout_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
